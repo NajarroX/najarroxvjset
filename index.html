@@ -1,0 +1,2515 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NAJARRO X ESTUDIO | Visuales IA para DJs y Festivales</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #6c5ce7;
+            --primary-dark: #5b4fcf;
+            --secondary: #fd79a8;
+            --dark: #2d3436;
+            --light: #f9f9f9;
+            --gray: #636e72;
+            --success: #00b894;
+            --warning: #fdcb6e;
+        }
+
+        body {
+            color: var(--dark);
+            line-height: 1.6;
+            background-color: var(--light);
+        }
+
+        /* Header & Navegación */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: rgba(45, 52, 54, 0.95);
+            padding: 1rem 0;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--light);
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--secondary);
+        }
+
+        .logo .x {
+            color: var(--primary);
+            font-weight: 900;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--light);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section - Fullscreen */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            color: white;
+            text-align: center;
+            padding-top: 80px;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            margin: 0.5rem;
+        }
+
+        .cta-button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-button.secondary {
+            background: transparent;
+            border: 2px solid white;
+        }
+
+        .cta-button.secondary:hover {
+            background: white;
+            color: var(--dark);
+        }
+
+        .cta-button.success {
+            background: var(--success);
+        }
+
+        .cta-button.success:hover {
+            background: #00a085;
+        }
+
+        /* Secciones generales */
+        .section {
+            padding: 6rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--dark);
+            margin-bottom: 1rem;
+        }
+
+        .section-title p {
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Cotizador Personalizado */
+        .quote-section {
+            background-color: #f5f7ff;
+        }
+
+        .quote-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .quote-form {
+            flex: 1;
+            min-width: 300px;
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .quote-summary {
+            flex: 1;
+            min-width: 300px;
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .counter {
+            display: flex;
+            align-items: center;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+            width: fit-content;
+        }
+
+        .counter-btn {
+            background: #f1f1f1;
+            border: none;
+            width: 40px;
+            height: 40px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .counter-btn:hover {
+            background: #e1e1e1;
+        }
+
+        .counter-input {
+            width: 60px;
+            height: 40px;
+            text-align: center;
+            border: none;
+            border-left: 1px solid #ddd;
+            border-right: 1px solid #ddd;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .checkbox-label:hover {
+            background: #f5f5f5;
+        }
+
+        .checkbox-label input {
+            margin-right: 0.5rem;
+        }
+
+        /* Resumen de cotización */
+        .summary-items {
+            flex-grow: 1;
+            margin-bottom: 1.5rem;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .summary-item.total {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--primary);
+            border-top: 2px solid #eee;
+            margin-top: 0.5rem;
+            padding-top: 1rem;
+        }
+
+        .summary-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        /* Texto de cotización para copiar */
+        .quote-text {
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 1rem;
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            white-space: pre-line;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .copy-button {
+            background: var(--dark);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            transition: background 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .copy-button:hover {
+            background: #444;
+        }
+
+        .copy-button.success {
+            background: var(--success);
+        }
+
+        .copy-button.success:hover {
+            background: #00a085;
+        }
+
+        /* Botones de reset específicos */
+        .reset-quote-only {
+            background: var(--gray);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        .reset-quote-only:hover {
+            background: #444;
+        }
+        
+        .summary-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .summary-header h3 {
+            margin: 0;
+        }
+
+        /* Productos Pre-hechos - NUEVA SECCIÓN SEPARADA */
+        .packs-section {
+            background-color: #f9f7ff;
+        }
+
+        .pack-selection-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .pack-configuration {
+            flex: 1;
+            min-width: 300px;
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .pack-summary {
+            flex: 1;
+            min-width: 300px;
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .products-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--secondary);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .product-header {
+            padding: 2rem;
+            text-align: center;
+            background: var(--primary);
+            color: white;
+        }
+
+        .product-header h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-price span {
+            font-size: 1rem;
+            font-weight: normal;
+        }
+
+        .product-body {
+            padding: 2rem;
+        }
+
+        .product-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .product-features li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+        }
+
+        .product-features li i {
+            color: var(--success);
+            margin-right: 0.5rem;
+        }
+
+        /* Modal para selección de loops */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            overflow-y: auto;
+            padding: 2rem 0;
+        }
+
+        .modal-content {
+            background: white;
+            width: 90%;
+            max-width: 1000px;
+            margin: 2rem auto;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .modal-header {
+            background: var(--primary);
+            color: white;
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            font-size: 1.5rem;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.8rem;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .modal-body {
+            padding: 2rem;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        .loops-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .loop-item {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 1rem;
+            transition: all 0.3s;
+        }
+
+        .loop-item.selected {
+            border-color: var(--primary);
+            background-color: rgba(108, 92, 231, 0.05);
+        }
+
+        .loop-item label {
+            display: flex;
+            align-items: flex-start;
+            cursor: pointer;
+        }
+
+        .loop-item input {
+            margin-right: 0.8rem;
+            margin-top: 0.3rem;
+        }
+
+        .loop-info h4 {
+            margin-bottom: 0.3rem;
+            font-size: 1rem;
+        }
+
+        .loop-info p {
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+
+        .selection-counter {
+            background: var(--primary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+
+        .custom-options {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 2px solid #eee;
+        }
+
+        /* Pasos del proceso */
+        .process-steps {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .step {
+            text-align: center;
+            max-width: 250px;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 auto 1rem;
+        }
+
+        .step h3 {
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+        }
+
+        /* Banner de WhatsApp */
+        .whatsapp-banner {
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 2rem;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .whatsapp-banner a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: var(--secondary);
+        }
+
+        .footer-section p {
+            margin-bottom: 1rem;
+            opacity: 0.8;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+
+        .social-icons a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.7;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--dark);
+                flex-direction: column;
+                padding: 1rem 0;
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .nav-links li {
+                margin: 0;
+                text-align: center;
+                padding: 0.8rem 0;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .section {
+                padding: 4rem 0;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .quote-container,
+            .pack-selection-container {
+                flex-direction: column;
+            }
+            
+            .summary-actions {
+                flex-direction: column;
+            }
+            
+            .cta-button {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .process-steps {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .products-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-body {
+                padding: 1.5rem;
+            }
+            
+            .loops-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Utilidades */
+        .hidden {
+            display: none;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .mt-1 { margin-top: 1rem; }
+        .mt-2 { margin-top: 2rem; }
+        .mt-3 { margin-top: 3rem; }
+        .mb-1 { margin-bottom: 1rem; }
+        .mb-2 { margin-bottom: 2rem; }
+        .mb-3 { margin-bottom: 3rem; }
+
+        /* Animaciones */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header y Navegación -->
+    <header>
+        <div class="container nav-container">
+            <a href="#" class="logo">NAJARRO<span class="x"> X</span> ESTUDIO</a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Inicio</a></li>
+                <li><a href="#cotizador">Cotizador Personalizado</a></li>
+                <li><a href="#packs">Packs Pre-hechos</a></li>
+                <li><a href="#proceso">Proceso</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Sección Hero - Fullscreen -->
+    <section class="hero" id="home">
+        <div class="container hero-content fade-in">
+            <h1>VISUALES CON IA PARA TU PRÓXIMO SHOW</h1>
+            <p>Creamos loops visuales únicos para DJs, conciertos y festivales usando IA (ComfyUI) y tecnología 3D (Blender). Eleva tu experiencia visual con nuestro arte digital.</p>
+            <div>
+                <a href="#cotizador" class="cta-button">COTIZACIÓN PERSONALIZADA</a>
+                <a href="#packs" class="cta-button secondary">VER PACKS LISTOS</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Proceso -->
+    <section class="section" id="proceso">
+        <div class="container">
+            <div class="section-title">
+                <h2>CÓMO FUNCIONA</h2>
+                <p>Un proceso simple y rápido para obtener tus visuales en menos de 72 horas</p>
+            </div>
+            
+            <div class="process-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Eliges</h3>
+                    <p>Selecciona entre packs pre-hechos o personaliza tu proyecto exacto</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Pagas</h3>
+                    <p>Realizas el pago con tarjeta, transferencia o QR</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Recibes</h3>
+                    <p>Obtienes tus visuales en 24-72 horas según tu selección</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Cotizador Personalizado -->
+    <section class="section quote-section" id="cotizador">
+        <div class="container">
+            <div class="section-title">
+                <h2>COTIZADOR PERSONALIZADO</h2>
+                <p>Para proyectos únicos y específicos. Configura cada detalle y obtén un precio exacto.</p>
+                <p class="mt-1"><strong>Desde $40 por loop</strong> - Ideal para proyectos especiales o necesidades específicas</p>
+            </div>
+            
+            <div class="quote-container">
+                <div class="quote-form">
+                    <h3>Configura tu proyecto personalizado</h3>
+                    
+                    <div class="form-group">
+                        <label for="projectName">Nombre del Proyecto / Evento</label>
+                        <input type="text" id="projectName" class="form-control" placeholder="Ej: Festival Electrónico 2024">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Cantidad de Loops</label>
+                        <div class="counter">
+                            <button type="button" class="counter-btn" id="decreaseLoops">-</button>
+                            <input type="number" id="loopCount" class="counter-input" value="3" min="1" max="50">
+                            <button type="button" class="counter-btn" id="increaseLoops">+</button>
+                        </div>
+                        <small>Recomendación: 3-5 loops para set de 1 hora</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Duración de cada Loop</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="radio" name="duration" value="15"> 15s
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="radio" name="duration" value="30" checked> 30s (recomendado)
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="radio" name="duration" value="45"> 45s
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="radio" name="duration" value="60"> 60s
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Estilo Visual</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="radio" name="style" value="cyberpunk" checked> Cyberpunk
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="radio" name="style" value="abstract"> Abstracto
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="radio" name="style" value="organic"> Orgánico
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="radio" name="style" value="futuristic"> Futurista
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Plazo de Entrega</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="radio" name="delivery" value="normal" checked> Normal (72 horas)
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="radio" name="delivery" value="express"> Express (24 horas) +30%
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Extras (Opcionales)</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="extraIntro" value="intro"> Intro personalizado (+$50)
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="extraBranding" value="branding"> Logo animado (+$70)
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="extraRevisions" value="revisions"> 2 revisiones (+$40)
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="clientEmail">Correo para envío (opcional)</label>
+                        <input type="email" id="clientEmail" class="form-control" placeholder="tu@email.com">
+                    </div>
+                    
+                    <button id="resetFormOnly" class="reset-quote-only">
+                        <i class="fas fa-undo"></i> REINICIAR FORMULARIO
+                    </button>
+                </div>
+                
+                <div class="quote-summary">
+                    <div class="summary-header">
+                        <h3>Resumen de Cotización Personalizada</h3>
+                        <button id="resetQuoteOnly" class="reset-quote-only">
+                            <i class="fas fa-redo"></i> REINICIAR
+                        </button>
+                    </div>
+                    
+                    <div class="summary-items" id="quoteSummary">
+                        <!-- Los elementos se llenarán con JavaScript -->
+                    </div>
+                    
+                    <div id="quoteTextContainer" class="hidden">
+                        <div class="quote-text" id="quoteText"></div>
+                        <button id="copyQuoteText" class="copy-button">
+                            <i class="fas fa-copy"></i> COPIAR COTIZACIÓN
+                        </button>
+                    </div>
+                    
+                    <div class="summary-actions">
+                        <button id="generateQuote" class="cta-button success">
+                            <i class="fas fa-file-alt"></i> GENERAR COTIZACIÓN
+                        </button>
+                        <button id="downloadQuotePDF" class="cta-button">
+                            <i class="fas fa-download"></i> DESCARGAR PDF
+                        </button>
+                    </div>
+                    
+                    <div class="whatsapp-banner hidden" id="whatsappBanner">
+                        <i class="fab fa-whatsapp" style="font-size: 1.8rem;"></i>
+                        <div>
+                            <strong>¡Cotización lista!</strong>
+                            <p>Envíanosla por WhatsApp para proceder con el pago</p>
+                            <a href="https://wa.me/50764614851?text=Hola,%20quiero%20proceder%20con%20la%20cotización%20de%20visuales" target="_blank">
+                                ENVIAR POR WHATSAPP
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NUEVA Sección Packs Pre-hechos (COMPLETAMENTE SEPARADA) -->
+    <section class="section packs-section" id="packs">
+        <div class="container">
+            <div class="section-title">
+                <h2>PACKS PRE-HECHOS</h2>
+                <p>La opción más económica y rápida. Packs con descuento y entrega inmediata.</p>
+                <p class="mt-1"><strong>Desde $97 por 5 loops</strong> - Ahorras hasta 50% vs personalizado</p>
+            </div>
+            
+            <div class="products-container">
+                <!-- Pack Básico -->
+                <div class="product-card">
+                    <div class="product-badge">MÁS POPULAR</div>
+                    <div class="product-header">
+                        <h3>PACK BÁSICO</h3>
+                        <div class="product-price">$97</div>
+                        <p>5 loops seleccionables</p>
+                    </div>
+                    <div class="product-body">
+                        <ul class="product-features">
+                            <li><i class="fas fa-check"></i> 5 loops de 30 segundos</li>
+                            <li><i class="fas fa-check"></i> Elige entre 30 visuales</li>
+                            <li><i class="fas fa-check"></i> Resolución 1080p Full HD</li>
+                            <li><i class="fas fa-check"></i> Formatos: MP4, MOV</li>
+                            <li><i class="fas fa-check"></i> Sin marca de agua</li>
+                            <li><i class="fas fa-check"></i> Entrega en 24 horas</li>
+                            <li><i class="fas fa-check"></i> <strong>Ahorras 50% vs personalizado</strong></li>
+                        </ul>
+                        <button class="cta-button select-pack" data-pack="basico" data-price="97" data-loops="5">SELECCIONAR PACK</button>
+                    </div>
+                </div>
+                
+                <!-- Pack Pro -->
+                <div class="product-card">
+                    <div class="product-badge">MEJOR VALOR</div>
+                    <div class="product-header" style="background-color: #5b4fcf;">
+                        <h3>PACK PRO</h3>
+                        <div class="product-price">$247</div>
+                        <p>10 loops + 1 personalizado</p>
+                    </div>
+                    <div class="product-body">
+                        <ul class="product-features">
+                            <li><i class="fas fa-check"></i> 10 loops de 30 segundos</li>
+                            <li><i class="fas fa-check"></i> 1 loop personalizado (30s)</li>
+                            <li><i class="fas fa-check"></i> Elige entre 30 visuales</li>
+                            <li><i class="fas fa-check"></i> Resolución 2K (2560x1440)</li>
+                            <li><i class="fas fa-check"></i> Formatos: MP4, MOV, ProRes</li>
+                            <li><i class="fas fa-check"></i> Asesoría por 1 hora</li>
+                            <li><i class="fas fa-check"></i> Entrega en 48 horas</li>
+                            <li><i class="fas fa-check"></i> <strong>Ahorras 45% vs personalizado</strong></li>
+                        </ul>
+                        <button class="cta-button select-pack" data-pack="pro" data-price="247" data-loops="10">SELECCIONAR PACK</button>
+                    </div>
+                </div>
+                
+                <!-- Pack Festival -->
+                <div class="product-card">
+                    <div class="product-badge">PREMIUM</div>
+                    <div class="product-header" style="background-color: #fd79a8;">
+                        <h3>PACK FESTIVAL</h3>
+                        <div class="product-price">$497</div>
+                        <p>20 loops + 3 personalizados</p>
+                    </div>
+                    <div class="product-body">
+                        <ul class="product-features">
+                            <li><i class="fas fa-check"></i> 20 loops de 30-45 segundos</li>
+                            <li><i class="fas fa-check"></i> 3 loops personalizados (hasta 45s)</li>
+                            <li><i class="fas fa-check"></i> Elige entre 30 visuales</li>
+                            <li><i class="fas fa-check"></i> Resolución 4K (3840x2160)</li>
+                            <li><i class="fas fa-check"></i> Todos los formatos</li>
+                            <li><i class="fas fa-check"></i> 3 revisiones por loop</li>
+                            <li><i class="fas fa-check"></i> Asesoría premium (3 horas)</li>
+                            <li><i class="fas fa-check"></i> Entrega en 72 horas</li>
+                            <li><i class="fas fa-check"></i> <strong>Ahorras 40% vs personalizado</strong></li>
+                        </ul>
+                        <button class="cta-button select-pack" data-pack="festival" data-price="497" data-loops="20">SELECCIONAR PACK</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Área de configuración del pack seleccionado (INICIALMENTE OCULTA) -->
+            <div id="packConfigSection" class="hidden mt-3">
+                <div class="pack-selection-container">
+                    <div class="pack-configuration">
+                        <h3 id="selectedPackTitle"></h3>
+                        <div class="selection-counter" id="selectionCounter">
+                            Seleccionados: <span id="selectedCount">0</span> de <span id="requiredCount">0</span>
+                        </div>
+                        <p id="packDescription"></p>
+                        
+                        <div class="mt-2">
+                            <button id="openLoopsModal" class="cta-button">
+                                <i class="fas fa-eye"></i> VER Y SELECCIONAR LOOPS
+                            </button>
+                        </div>
+                        
+                        <div class="custom-options">
+                            <h4>Personalizaciones (solo para packs Pro y Festival)</h4>
+                            <div class="form-group">
+                                <label for="packProjectName">Nombre de tu proyecto (opcional)</label>
+                                <input type="text" id="packProjectName" class="form-control" placeholder="Ej: Mi set en Club XYZ">
+                            </div>
+                            <div class="form-group">
+                                <label for="packCustomDescription">Describe tus loops personalizados</label>
+                                <textarea id="packCustomDescription" class="form-control" rows="3" placeholder="Para los loops personalizados, describe lo que necesitas..."></textarea>
+                            </div>
+                        </div>
+                        
+                        <button id="resetPackSelection" class="reset-quote-only mt-2">
+                            <i class="fas fa-times"></i> CAMBIAR DE PACK
+                        </button>
+                    </div>
+                    
+                    <div class="pack-summary">
+                        <div class="summary-header">
+                            <h3>Resumen del Pack</h3>
+                        </div>
+                        
+                        <div class="summary-items" id="packSummary">
+                            <!-- Los elementos se llenarán con JavaScript -->
+                        </div>
+                        
+                        <div id="packQuoteTextContainer" class="hidden">
+                            <div class="quote-text" id="packQuoteText"></div>
+                            <button id="copyPackQuoteText" class="copy-button">
+                                <i class="fas fa-copy"></i> COPIAR PEDIDO
+                            </button>
+                        </div>
+                        
+                        <div class="summary-actions">
+                            <button id="generatePackOrder" class="cta-button success">
+                                <i class="fas fa-shopping-cart"></i> GENERAR PEDIDO
+                            </button>
+                            <button id="downloadPackPDF" class="cta-button">
+                                <i class="fas fa-download"></i> DESCARGAR PDF
+                            </button>
+                        </div>
+                        
+                        <div class="whatsapp-banner hidden" id="packWhatsappBanner">
+                            <i class="fab fa-whatsapp" style="font-size: 1.8rem;"></i>
+                            <div>
+                                <strong>¡Pedido listo!</strong>
+                                <p>Envíanoslo por WhatsApp para proceder con el pago</p>
+                                <a href="https://wa.me/50764614851?text=Hola,%20quiero%20proceder%20con%20el%20pack%20de%20visuales" target="_blank">
+                                    ENVIAR POR WHATSAPP
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal para selección de loops -->
+    <div class="modal" id="loopsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Selecciona tus loops</h3>
+                <button class="close-modal" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="selection-counter">
+                    Seleccionados: <span id="modalSelectedCount">0</span> de <span id="modalRequiredCount">0</span>
+                </div>
+                <p id="modalInstructions"></p>
+                
+                <div id="loopsSelectionContainer">
+                    <!-- Los loops se cargarán dinámicamente -->
+                </div>
+                
+                <div class="text-center mt-3">
+                    <button id="confirmSelection" class="cta-button success">CONFIRMAR SELECCIÓN</button>
+                    <button id="cancelSelection" class="cta-button secondary">CANCELAR</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="contacto">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>NAJARRO X ESTUDIO</h3>
+                    <p>Especialistas en creación de visuales con IA y 3D para la industria musical. Transformamos ideas en experiencias visuales inmersivas.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-behance"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Métodos de Pago</h3>
+                    <p><i class="fas fa-credit-card"></i> Tarjetas débito/crédito</p>
+                    <p><i class="fas fa-qrcode"></i> QR de pago</p>
+                    <p><i class="fas fa-university"></i> Transferencia bancaria</p>
+                    <p><i class="fab fa-paypal"></i> PayPal</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Contacto Rápido</h3>
+                    <p><i class="fas fa-envelope"></i> hola@najarroxestudio.com</p>
+                    <p><i class="fab fa-whatsapp"></i> +52 1 55 1234 5678</p>
+                    <p><i class="fas fa-clock"></i> Respuesta en menos de 4 horas</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 NAJARRO X ESTUDIO. Visuales con IA para DJs y festivales.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Variables globales
+        let selectedPack = null;
+        let selectedLoops = [];
+        let currentPackPrice = 0;
+        let requiredLoopsCount = 0;
+        let packCustomDescription = "";
+        let packProjectName = "";
+        
+        // Base de datos ampliada con 30 loops
+        let loopsDatabase = [
+            { id: 1, name: "Nebula Flow", duration: "30s", category: "Abstracto", description: "Formas fluidas y colores etéreos" },
+            { id: 2, name: "Cyber Grid", duration: "30s", category: "Cyberpunk", description: "Grid digital con efectos glitch" },
+            { id: 3, name: "Organic Bloom", duration: "30s", category: "Nature", description: "Crecimiento orgánico y floral" },
+            { id: 4, name: "Liquid Metal", duration: "30s", category: "Futurista", description: "Reflejos metálicos y movimiento fluido" },
+            { id: 5, name: "Digital Rain", duration: "30s", category: "Matrix", description: "Código cayendo en cascada" },
+            { id: 6, name: "Cosmic Dust", duration: "30s", category: "Space", description: "Partículas estelares en movimiento" },
+            { id: 7, name: "Neon Pulse", duration: "30s", category: "Neon", description: "Ritmos de luz neón sincronizados" },
+            { id: 8, name: "Fractal Dreams", duration: "30s", category: "Fractal", description: "Fractales en evolución infinita" },
+            { id: 9, name: "Hologram City", duration: "45s", category: "Cyberpunk", description: "Ciudad holográfica futurista" },
+            { id: 10, name: "Energy Vortex", duration: "45s", category: "Abstracto", description: "Vórtice de energía en movimiento" },
+            { id: 11, name: "Data Stream", duration: "30s", category: "Futurista", description: "Flujo de datos en tiempo real" },
+            { id: 12, name: "Galaxy Core", duration: "45s", category: "Space", description: "Núcleo galáctico en rotación" },
+            { id: 13, name: "Quantum Fields", duration: "60s", category: "Abstracto", description: "Campos cuánticos en superposición" },
+            { id: 14, name: "Neo-Tokyo Night", duration: "45s", category: "Cyberpunk", description: "Paisaje nocturno de Neo-Tokyo" },
+            { id: 15, name: "Biomechanical", duration: "60s", category: "Futurista", description: "Fusión de biología y tecnología" },
+            { id: 16, name: "Stellar Birth", duration: "60s", category: "Space", description: "Formación de una estrella" },
+            { id: 17, name: "Digital Ecosystem", duration: "45s", category: "Nature", description: "Ecosistema digital en evolución" },
+            { id: 18, name: "Time Warp", duration: "60s", category: "Abstracto", description: "Distorsión temporal y espacial" },
+            { id: 19, name: "Neon Genesis", duration: "45s", category: "Neon", description: "Origen cósmico en neón" },
+            { id: 20, name: "Cyber Temple", duration: "60s", category: "Cyberpunk", description: "Templo digital con rituales de datos" },
+            { id: 21, name: "Synthwave Sunset", duration: "30s", category: "Synthwave", description: "Atardecer retro-futurista con neón" },
+            { id: 22, name: "Quantum Strings", duration: "45s", category: "Abstracto", description: "Cuerdas cuánticas en vibración" },
+            { id: 23, name: "Neural Network", duration: "30s", category: "Futurista", description: "Red neuronal artificial en acción" },
+            { id: 24, name: "Aurora Digital", duration: "45s", category: "Nature", description: "Aurora boreal digitalizada" },
+            { id: 25, name: "Cyberpunk Alley", duration: "30s", category: "Cyberpunk", description: "Callejón futurista con lluvia digital" },
+            { id: 26, name: "Crystal Growth", duration: "45s", category: "Abstracto", description: "Crecimiento de cristales digitales" },
+            { id: 27, name: "Data Matrix", duration: "30s", category: "Matrix", description: "Matriz de datos en constante cambio" },
+            { id: 28, name: "Solar Flare", duration: "45s", category: "Space", description: "Erupción solar en tiempo real" },
+            { id: 29, name: "Liquid Crystal", duration: "30s", category: "Abstracto", description: "Cristal líquido en movimiento" },
+            { id: 30, name: "Neon Circuit", duration: "45s", category: "Neon", description: "Circuitos de neón pulsantes" }
+        ];
+
+        // Inicialización cuando el DOM esté cargado
+        document.addEventListener('DOMContentLoaded', function() {
+            // Navegación móvil
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const navLinks = document.getElementById('navLinks');
+            
+            mobileMenuBtn.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+                mobileMenuBtn.innerHTML = navLinks.classList.contains('active') 
+                    ? '<i class="fas fa-times"></i>' 
+                    : '<i class="fas fa-bars"></i>';
+            });
+            
+            // Cerrar menú al hacer clic en un enlace
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', function() {
+                    navLinks.classList.remove('active');
+                    mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                });
+            });
+            
+            // Configurar cotizador personalizado
+            setupQuoteCalculator();
+            
+            // Configurar selección de packs
+            setupPackSelection();
+            
+            // Configurar modal
+            setupModal();
+            
+            // Configurar eventos de botones
+            setupEventListeners();
+            
+            // Actualizar resumen inicial
+            updateQuoteSummary();
+        });
+        
+        // Configurar calculadora de cotización PERSONALIZADA
+        function setupQuoteCalculator() {
+            // Contador de loops
+            const decreaseBtn = document.getElementById('decreaseLoops');
+            const increaseBtn = document.getElementById('increaseLoops');
+            const loopCountInput = document.getElementById('loopCount');
+            
+            decreaseBtn.addEventListener('click', function() {
+                let value = parseInt(loopCountInput.value);
+                if (value > 1) {
+                    loopCountInput.value = value - 1;
+                    updateQuoteSummary();
+                }
+            });
+            
+            increaseBtn.addEventListener('click', function() {
+                let value = parseInt(loopCountInput.value);
+                if (value < 50) {
+                    loopCountInput.value = value + 1;
+                    updateQuoteSummary();
+                }
+            });
+            
+            loopCountInput.addEventListener('change', function() {
+                let value = parseInt(this.value);
+                if (value < 1) this.value = 1;
+                if (value > 50) this.value = 50;
+                updateQuoteSummary();
+            });
+            
+            // Todos los demás controles
+            document.querySelectorAll('input[name="duration"], input[name="style"], input[name="delivery"], #extraIntro, #extraBranding, #extraRevisions, #clientEmail').forEach(element => {
+                element.addEventListener('input', updateQuoteSummary);
+                element.addEventListener('change', updateQuoteSummary);
+            });
+            
+            // Campo de nombre de proyecto
+            document.getElementById('projectName').addEventListener('input', updateQuoteSummary);
+        }
+        
+        // Calcular y actualizar resumen de cotización PERSONALIZADA
+        function updateQuoteSummary() {
+            // Obtener valores del formulario
+            const loopCount = parseInt(document.getElementById('loopCount').value);
+            const projectName = document.getElementById('projectName').value || "Proyecto sin nombre";
+            
+            // Determinar duración
+            let duration = 30;
+            const selectedDuration = document.querySelector('input[name="duration"]:checked');
+            if (selectedDuration) {
+                duration = parseInt(selectedDuration.value);
+            }
+            
+            // Determinar estilo
+            const style = document.querySelector('input[name="style"]:checked').value;
+            let styleText = "Cyberpunk";
+            if (style === 'abstract') styleText = "Abstracto";
+            else if (style === 'organic') styleText = "Orgánico";
+            else if (style === 'futuristic') styleText = "Futurista";
+            
+            // Determinar precio por loop según duración
+            let pricePerLoop = 40;
+            
+            if (duration === 15) pricePerLoop = 30;
+            else if (duration === 45) pricePerLoop = 55;
+            else if (duration === 60) pricePerLoop = 70;
+            
+            // Calcular subtotal
+            let subtotal = loopCount * pricePerLoop;
+            
+            // Aplicar ajuste por plazo express
+            const delivery = document.querySelector('input[name="delivery"]:checked').value;
+            let expressMultiplier = 1;
+            let deliveryText = "Normal (72 horas)";
+            if (delivery === 'express') {
+                expressMultiplier = 1.3;
+                deliveryText = "Express (24 horas)";
+                subtotal *= expressMultiplier;
+            }
+            
+            // Agregar extras
+            let extrasTotal = 0;
+            const extras = [];
+            
+            if (document.getElementById('extraIntro').checked) {
+                extrasTotal += 50;
+                extras.push("Intro personalizado");
+            }
+            
+            if (document.getElementById('extraBranding').checked) {
+                extrasTotal += 70;
+                extras.push("Logo animado");
+            }
+            
+            if (document.getElementById('extraRevisions').checked) {
+                extrasTotal += 40;
+                extras.push("2 revisiones adicionales");
+            }
+            
+            // Total final
+            const total = subtotal + extrasTotal;
+            
+            // Actualizar resumen en pantalla
+            const summaryContainer = document.getElementById('quoteSummary');
+            
+            let summaryHTML = `
+                <div class="summary-item">
+                    <span>Proyecto:</span>
+                    <span>${projectName}</span>
+                </div>
+                <div class="summary-item">
+                    <span>Loops (${loopCount} x ${duration}s):</span>
+                    <span>$${loopCount * pricePerLoop}</span>
+                </div>
+                <div class="summary-item">
+                    <span>Estilo visual:</span>
+                    <span>${styleText}</span>
+                </div>
+                <div class="summary-item">
+                    <span>Entrega:</span>
+                    <span>${deliveryText}</span>
+                </div>
+            `;
+            
+            if (extras.length > 0) {
+                extras.forEach(extra => {
+                    let extraPrice = 0;
+                    if (extra.includes("Intro")) extraPrice = 50;
+                    else if (extra.includes("Logo")) extraPrice = 70;
+                    else if (extra.includes("revisiones")) extraPrice = 40;
+                    
+                    summaryHTML += `
+                        <div class="summary-item">
+                            <span>${extra}:</span>
+                            <span>+$${extraPrice}</span>
+                        </div>
+                    `;
+                });
+            }
+            
+            summaryHTML += `
+                <div class="summary-item total">
+                    <span>TOTAL PERSONALIZADO:</span>
+                    <span>$${total.toFixed(2)}</span>
+                </div>
+            `;
+            
+            summaryContainer.innerHTML = summaryHTML;
+            
+            // Guardar datos para texto y PDF
+            window.currentQuoteData = {
+                projectName,
+                loopCount,
+                duration,
+                style: styleText,
+                pricePerLoop,
+                delivery: deliveryText,
+                extras,
+                subtotal: loopCount * pricePerLoop,
+                extrasTotal,
+                total,
+                expressMultiplier
+            };
+        }
+        
+        // Configurar selección de packs
+        function setupPackSelection() {
+            document.querySelectorAll('.select-pack').forEach(button => {
+                button.addEventListener('click', function() {
+                    selectedPack = this.dataset.pack;
+                    currentPackPrice = parseInt(this.dataset.price);
+                    requiredLoopsCount = parseInt(this.dataset.loops);
+                    
+                    // Mostrar sección de configuración del pack
+                    document.getElementById('packConfigSection').classList.remove('hidden');
+                    
+                    // Actualizar información del pack seleccionado
+                    updatePackSelectionInfo();
+                    
+                    // Desplazar a la sección de packs
+                    document.getElementById('packs').scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+            
+            // Botón para cambiar de pack
+            document.getElementById('resetPackSelection').addEventListener('click', function() {
+                resetPackSelection();
+            });
+            
+            // Campo de nombre del proyecto en packs
+            document.getElementById('packProjectName').addEventListener('input', function() {
+                packProjectName = this.value;
+                updatePackSummary();
+            });
+            
+            // Campo de descripción personalizada en packs
+            document.getElementById('packCustomDescription').addEventListener('input', function() {
+                packCustomDescription = this.value;
+            });
+        }
+        
+        // Actualizar información del pack seleccionado
+        function updatePackSelectionInfo() {
+            let packName = "";
+            let packDescription = "";
+            let customInstructions = "";
+            
+            if (selectedPack === 'basico') {
+                packName = "PACK BÁSICO";
+                packDescription = "Selecciona 5 loops de nuestra biblioteca de 30 visuales. Entrega en 24 horas.";
+                customInstructions = "Este pack incluye 5 loops pre-hechos. No incluye personalizaciones.";
+            } else if (selectedPack === 'pro') {
+                packName = "PACK PRO";
+                packDescription = "Selecciona 10 loops + 1 loop personalizado. Incluye asesoría de 1 hora.";
+                customInstructions = "Este pack incluye 10 loops pre-hechos + 1 loop personalizado. Describe abajo lo que necesitas en tu loop personalizado.";
+            } else if (selectedPack === 'festival') {
+                packName = "PACK FESTIVAL";
+                packDescription = "Selecciona 20 loops + 3 loops personalizados. Incluye asesoría premium de 3 horas y revisiones.";
+                customInstructions = "Este pack incluye 20 loops pre-hechos + 3 loops personalizados. Describe abajo lo que necesitas en tus loops personalizados.";
+            }
+            
+            // Actualizar interfaz
+            document.getElementById('selectedPackTitle').textContent = packName;
+            document.getElementById('packDescription').textContent = packDescription;
+            document.getElementById('selectedCount').textContent = selectedLoops.length;
+            document.getElementById('requiredCount').textContent = requiredLoopsCount;
+            
+            // Mostrar/ocultar campo de personalizaciones según el pack
+            const customOptions = document.querySelector('.custom-options');
+            if (selectedPack === 'basico') {
+                customOptions.style.display = 'none';
+            } else {
+                customOptions.style.display = 'block';
+                document.querySelector('.custom-options h4').textContent = 
+                    selectedPack === 'pro' ? 'Personalización (1 loop personalizado)' : 'Personalizaciones (3 loops personalizados)';
+            }
+            
+            // Resetear selección de loops
+            selectedLoops = [];
+            updatePackSummary();
+        }
+        
+        // Resetear selección de pack
+        function resetPackSelection() {
+            if (confirm("¿Cambiar de pack? Se perderá la selección actual.")) {
+                selectedPack = null;
+                selectedLoops = [];
+                currentPackPrice = 0;
+                requiredLoopsCount = 0;
+                packCustomDescription = "";
+                packProjectName = "";
+                
+                // Ocultar sección de configuración
+                document.getElementById('packConfigSection').classList.add('hidden');
+                document.getElementById('packQuoteTextContainer').classList.add('hidden');
+                document.getElementById('packWhatsappBanner').classList.add('hidden');
+                
+                // Limpiar campos
+                document.getElementById('packProjectName').value = "";
+                document.getElementById('packCustomDescription').value = "";
+                
+                // Desplazar a los packs
+                document.getElementById('packs').scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+        
+        // Configurar modal para selección de loops
+        function setupModal() {
+            const modal = document.getElementById('loopsModal');
+            const closeBtn = document.getElementById('closeModal');
+            const cancelBtn = document.getElementById('cancelSelection');
+            
+            // Botón para abrir modal
+            document.getElementById('openLoopsModal').addEventListener('click', function() {
+                openLoopsModal();
+            });
+            
+            // Cerrar modal
+            closeBtn.addEventListener('click', closeModal);
+            cancelBtn.addEventListener('click', closeModal);
+            
+            // Cerrar al hacer clic fuera del contenido
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+            
+            // Confirmar selección
+            document.getElementById('confirmSelection').addEventListener('click', function() {
+                // Verificar que se haya seleccionado la cantidad exacta requerida
+                if (selectedLoops.length !== requiredLoopsCount) {
+                    alert(`Debes seleccionar exactamente ${requiredLoopsCount} loops para este pack. Has seleccionado ${selectedLoops.length}.`);
+                    return;
+                }
+                
+                // Cerrar modal
+                closeModal();
+                
+                // Actualizar resumen
+                updatePackSummary();
+            });
+        }
+        
+        // Abrir modal para selección de loops
+        function openLoopsModal() {
+            if (!selectedPack) {
+                alert("Por favor, selecciona un pack primero.");
+                return;
+            }
+            
+            // Actualizar título e instrucciones del modal
+            let packName = "";
+            if (selectedPack === 'basico') packName = "BÁSICO";
+            else if (selectedPack === 'pro') packName = "PRO";
+            else if (selectedPack === 'festival') packName = "FESTIVAL";
+            
+            document.getElementById('modalTitle').textContent = `Pack ${packName} - Selecciona tus loops`;
+            document.getElementById('modalInstructions').textContent = 
+                `Selecciona exactamente ${requiredLoopsCount} loops de nuestra biblioteca de 30 visuales.`;
+            
+            document.getElementById('modalSelectedCount').textContent = selectedLoops.length;
+            document.getElementById('modalRequiredCount').textContent = requiredLoopsCount;
+            
+            // Cargar loops disponibles
+            loadLoopsInModal();
+            
+            // Mostrar modal
+            document.getElementById('loopsModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // Cargar loops en el modal
+        function loadLoopsInModal() {
+            const container = document.getElementById('loopsSelectionContainer');
+            
+            let loopsHTML = `<div class="loops-grid">`;
+            
+            loopsDatabase.forEach(loop => {
+                const isSelected = selectedLoops.some(selectedLoop => selectedLoop.id === loop.id);
+                
+                loopsHTML += `
+                    <div class="loop-item ${isSelected ? 'selected' : ''}" data-loop-id="${loop.id}">
+                        <label>
+                            <input type="checkbox" class="loop-checkbox" value="${loop.id}" 
+                                   data-name="${loop.name}" data-duration="${loop.duration}" 
+                                   data-category="${loop.category}" ${isSelected ? 'checked' : ''}>
+                            <div class="loop-info">
+                                <h4>${loop.name}</h4>
+                                <p><strong>${loop.category}</strong> - ${loop.duration}</p>
+                                <p><small>${loop.description}</small></p>
+                            </div>
+                        </label>
+                    </div>
+                `;
+            });
+            
+            loopsHTML += `</div>`;
+            container.innerHTML = loopsHTML;
+            
+            // Configurar checkboxes
+            document.querySelectorAll('.loop-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const loopItem = this.closest('.loop-item');
+                    const loopId = parseInt(this.value);
+                    
+                    if (this.checked) {
+                        // Verificar que no se exceda el límite
+                        if (selectedLoops.length >= requiredLoopsCount) {
+                            this.checked = false;
+                            alert(`Solo puedes seleccionar exactamente ${requiredLoopsCount} loops para este pack.`);
+                            return;
+                        }
+                        
+                        loopItem.classList.add('selected');
+                        
+                        // Agregar a la lista de seleccionados
+                        const loop = loopsDatabase.find(l => l.id === loopId);
+                        if (loop) {
+                            selectedLoops.push({
+                                id: loop.id,
+                                name: loop.name,
+                                duration: loop.duration,
+                                category: loop.category
+                            });
+                        }
+                    } else {
+                        loopItem.classList.remove('selected');
+                        
+                        // Remover de la lista de seleccionados
+                        selectedLoops = selectedLoops.filter(loop => loop.id !== loopId);
+                    }
+                    
+                    // Actualizar contadores
+                    document.getElementById('modalSelectedCount').textContent = selectedLoops.length;
+                    document.getElementById('selectedCount').textContent = selectedLoops.length;
+                });
+            });
+        }
+        
+        // Cerrar modal
+        function closeModal() {
+            document.getElementById('loopsModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Actualizar resumen del pack
+        function updatePackSummary() {
+            const summaryContainer = document.getElementById('packSummary');
+            
+            let packName = "";
+            let deliveryTime = "";
+            let customCount = 0;
+            
+            if (selectedPack === 'basico') {
+                packName = "PACK BÁSICO";
+                deliveryTime = "24 horas";
+            } else if (selectedPack === 'pro') {
+                packName = "PACK PRO";
+                deliveryTime = "48 horas";
+                customCount = 1;
+            } else if (selectedPack === 'festival') {
+                packName = "PACK FESTIVAL";
+                deliveryTime = "72 horas";
+                customCount = 3;
+            }
+            
+            let projectNameDisplay = packProjectName || "Sin nombre específico";
+            
+            let summaryHTML = `
+                <div class="summary-item">
+                    <span>Pack seleccionado:</span>
+                    <span>${packName}</span>
+                </div>
+                <div class="summary-item">
+                    <span>Proyecto:</span>
+                    <span>${projectNameDisplay}</span>
+                </div>
+                <div class="summary-item">
+                    <span>Precio del pack:</span>
+                    <span>$${currentPackPrice}</span>
+                </div>
+                <div class="summary-item">
+                    <span>Loops seleccionados:</span>
+                    <span>${selectedLoops.length} de ${requiredLoopsCount}</span>
+                </div>
+                <div class="summary-item">
+                    <span>Entrega estimada:</span>
+                    <span>${deliveryTime}</span>
+                </div>
+            `;
+            
+            // Agregar loops seleccionados
+            if (selectedLoops.length > 0) {
+                summaryHTML += `<div class="summary-item"><span>Loops elegidos:</span><span></span></div>`;
+                selectedLoops.forEach(loop => {
+                    summaryHTML += `<div class="summary-item" style="padding-left: 1rem;">
+                        <span>• ${loop.name}</span>
+                        <span>${loop.duration}</span>
+                    </div>`;
+                });
+            }
+            
+            // Agregar personalizaciones si corresponde
+            if (customCount > 0 && packCustomDescription) {
+                summaryHTML += `<div class="summary-item">
+                    <span>Loops personalizados:</span>
+                    <span>${customCount}</span>
+                </div>`;
+            }
+            
+            summaryHTML += `
+                <div class="summary-item total">
+                    <span>TOTAL DEL PACK:</span>
+                    <span>$${currentPackPrice}</span>
+                </div>
+            `;
+            
+            summaryContainer.innerHTML = summaryHTML;
+            
+            // Actualizar contador
+            document.getElementById('selectedCount').textContent = selectedLoops.length;
+        }
+        
+        // Configurar eventos de botones
+        function setupEventListeners() {
+            // ========== COTIZACIÓN PERSONALIZADA ==========
+            // Generar cotización para proyecto personalizado
+            document.getElementById('generateQuote').addEventListener('click', function() {
+                // Actualizar resumen por si hay cambios
+                updateQuoteSummary();
+                
+                // Crear texto de cotización para copiar
+                const data = window.currentQuoteData;
+                
+                if (!data) {
+                    alert("Por favor, configura tu proyecto primero.");
+                    return;
+                }
+                
+                let quoteText = `COTIZACIÓN PERSONALIZADA - NAJARRO X ESTUDIO\n`;
+                quoteText += `=============================================\n`;
+                quoteText += `Proyecto: ${data.projectName}\n`;
+                quoteText += `Loops: ${data.loopCount} de ${data.duration}s cada uno\n`;
+                quoteText += `Estilo: ${data.style}\n`;
+                quoteText += `Entrega: ${data.delivery}\n\n`;
+                
+                quoteText += `DESGLOSE:\n`;
+                quoteText += `• ${data.loopCount} loops x $${data.pricePerLoop} c/u: $${data.subtotal}\n`;
+                
+                if (data.expressMultiplier > 1) {
+                    quoteText += `• Plazo express (+30%): +$${(data.subtotal * 0.3).toFixed(2)}\n`;
+                }
+                
+                if (data.extras.length > 0) {
+                    quoteText += `\nEXTRAS:\n`;
+                    data.extras.forEach(extra => {
+                        let extraPrice = 0;
+                        if (extra.includes("Intro")) extraPrice = 50;
+                        else if (extra.includes("Logo")) extraPrice = 70;
+                        else if (extra.includes("revisiones")) extraPrice = 40;
+                        
+                        quoteText += `• ${extra}: +$${extraPrice}\n`;
+                    });
+                }
+                
+                quoteText += `\nTOTAL: $${data.total.toFixed(2)}\n\n`;
+                quoteText += `Instrucciones para pagar:\n`;
+                quoteText += `1. Realiza el pago de $${data.total.toFixed(2)} via transferencia, tarjeta o QR\n`;
+                quoteText += `2. Envía el comprobante por WhatsApp\n`;
+                quoteText += `3. Recibirás tus loops en ${data.delivery.includes("24") ? "24" : "72"} horas\n`;
+                quoteText += `\nContacto: WhatsApp +507 6461 4851\n`;
+                
+                document.getElementById('quoteText').textContent = quoteText;
+                document.getElementById('quoteTextContainer').classList.remove('hidden');
+                document.getElementById('whatsappBanner').classList.remove('hidden');
+            });
+            
+            // Copiar texto de cotización personalizada
+            document.getElementById('copyQuoteText').addEventListener('click', function() {
+                const quoteText = document.getElementById('quoteText').textContent;
+                
+                navigator.clipboard.writeText(quoteText).then(function() {
+                    const button = document.getElementById('copyQuoteText');
+                    const originalText = button.innerHTML;
+                    
+                    button.innerHTML = '<i class="fas fa-check"></i> COPIADO';
+                    button.classList.add('success');
+                    
+                    setTimeout(function() {
+                        button.innerHTML = originalText;
+                        button.classList.remove('success');
+                    }, 2000);
+                }).catch(function(err) {
+                    console.error('Error al copiar: ', err);
+                    alert("Error al copiar. Por favor, selecciona y copia manualmente el texto.");
+                });
+            });
+            
+            // Descargar PDF de cotización personalizada
+            document.getElementById('downloadQuotePDF').addEventListener('click', function() {
+                if (window.currentQuoteData) {
+                    generateQuotePDF();
+                } else {
+                    alert("Por favor, genera una cotización primero.");
+                }
+            });
+            
+            // Reiniciar solo el formulario personalizado
+            document.getElementById('resetFormOnly').addEventListener('click', function() {
+                if (confirm("¿Reiniciar el formulario de cotización personalizada?")) {
+                    resetFormOnly();
+                }
+            });
+            
+            // Reiniciar cotización personalizada completa
+            document.getElementById('resetQuoteOnly').addEventListener('click', function() {
+                if (confirm("¿Reiniciar toda la cotización personalizada?")) {
+                    resetQuoteOnly();
+                }
+            });
+            
+            // ========== PACKS PRE-HECHOS ==========
+            // Generar pedido de pack
+            document.getElementById('generatePackOrder').addEventListener('click', function() {
+                // Verificar que se hayan seleccionado los loops requeridos
+                if (selectedLoops.length !== requiredLoopsCount) {
+                    alert(`Debes seleccionar exactamente ${requiredLoopsCount} loops para este pack. Actualmente has seleccionado ${selectedLoops.length}.`);
+                    return;
+                }
+                
+                // Crear texto del pedido
+                createPackOrderText();
+                
+                // Mostrar elementos
+                document.getElementById('packQuoteTextContainer').classList.remove('hidden');
+                document.getElementById('packWhatsappBanner').classList.remove('hidden');
+            });
+            
+            // Copiar texto del pedido del pack
+            document.getElementById('copyPackQuoteText').addEventListener('click', function() {
+                const quoteText = document.getElementById('packQuoteText').textContent;
+                
+                navigator.clipboard.writeText(quoteText).then(function() {
+                    const button = document.getElementById('copyPackQuoteText');
+                    const originalText = button.innerHTML;
+                    
+                    button.innerHTML = '<i class="fas fa-check"></i> COPIADO';
+                    button.classList.add('success');
+                    
+                    setTimeout(function() {
+                        button.innerHTML = originalText;
+                        button.classList.remove('success');
+                    }, 2000);
+                }).catch(function(err) {
+                    console.error('Error al copiar: ', err);
+                    alert("Error al copiar. Por favor, selecciona y copia manualmente el texto.");
+                });
+            });
+            
+            // Descargar PDF del pack
+            document.getElementById('downloadPackPDF').addEventListener('click', function() {
+                if (selectedPack && selectedLoops.length === requiredLoopsCount) {
+                    generatePackPDF();
+                } else {
+                    alert("Por favor, completa la selección del pack primero.");
+                }
+            });
+        }
+        
+        // Crear texto del pedido del pack
+        function createPackOrderText() {
+            let packName = "";
+            let deliveryTime = "";
+            let customCount = 0;
+            
+            if (selectedPack === 'basico') {
+                packName = "PACK BÁSICO";
+                deliveryTime = "24 horas";
+            } else if (selectedPack === 'pro') {
+                packName = "PACK PRO";
+                deliveryTime = "48 horas";
+                customCount = 1;
+            } else if (selectedPack === 'festival') {
+                packName = "PACK FESTIVAL";
+                deliveryTime = "72 horas";
+                customCount = 3;
+            }
+            
+            let projectNameDisplay = packProjectName || "Proyecto sin nombre específico";
+            
+            let orderText = `PEDIDO DE PACK PRE-HECHO - NAJARRO X ESTUDIO\n`;
+            orderText += `=============================================\n`;
+            orderText += `Pack: ${packName}\n`;
+            orderText += `Proyecto: ${projectNameDisplay}\n`;
+            orderText += `Precio: $${currentPackPrice}\n`;
+            orderText += `Loops incluidos: ${requiredLoopsCount}\n\n`;
+            
+            orderText += `LOOPS SELECCIONADOS:\n`;
+            selectedLoops.forEach(loop => {
+                orderText += `• ${loop.name} (${loop.category}) - ${loop.duration}\n`;
+            });
+            
+            if (customCount > 0 && packCustomDescription) {
+                orderText += `\nLOOPS PERSONALIZADOS (${customCount}):\n`;
+                orderText += `${packCustomDescription}\n`;
+            }
+            
+            orderText += `\nTOTAL: $${currentPackPrice}\n\n`;
+            orderText += `Entrega estimada: ${deliveryTime}\n\n`;
+            orderText += `Instrucciones para pagar:\n`;
+            orderText += `1. Realiza el pago de $${currentPackPrice} via transferencia, tarjeta o QR\n`;
+            orderText += `2. Envía el comprobante por WhatsApp\n`;
+            orderText += `3. Recibirás tus loops en ${deliveryTime}\n`;
+            orderText += `\nContacto: WhatsApp +507 6461 4851\n`;
+            
+            document.getElementById('packQuoteText').textContent = orderText;
+        }
+        
+        // Función para reiniciar solo el formulario personalizado
+        function resetFormOnly() {
+            document.getElementById('loopCount').value = 3;
+            document.querySelector('input[name="duration"][value="30"]').checked = true;
+            document.querySelector('input[name="style"][value="cyberpunk"]').checked = true;
+            document.querySelector('input[name="delivery"][value="normal"]').checked = true;
+            document.getElementById('extraIntro').checked = false;
+            document.getElementById('extraBranding').checked = false;
+            document.getElementById('extraRevisions').checked = false;
+            document.getElementById('clientEmail').value = '';
+            
+            updateQuoteSummary();
+            alert("Formulario de cotización personalizada reiniciado.");
+        }
+        
+        // Función para reiniciar cotización personalizada completa
+        function resetQuoteOnly() {
+            document.getElementById('projectName').value = '';
+            document.getElementById('loopCount').value = 3;
+            document.querySelector('input[name="duration"][value="30"]').checked = true;
+            document.querySelector('input[name="style"][value="cyberpunk"]').checked = true;
+            document.querySelector('input[name="delivery"][value="normal"]').checked = true;
+            document.getElementById('extraIntro').checked = false;
+            document.getElementById('extraBranding').checked = false;
+            document.getElementById('extraRevisions').checked = false;
+            document.getElementById('clientEmail').value = '';
+            
+            document.getElementById('quoteTextContainer').classList.add('hidden');
+            document.getElementById('whatsappBanner').classList.add('hidden');
+            
+            updateQuoteSummary();
+            alert("Cotización personalizada reiniciada completamente.");
+        }
+        
+        // Generar PDF para cotización personalizada
+        function generateQuotePDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            const data = window.currentQuoteData;
+            
+            // Configuración inicial
+            doc.setFontSize(20);
+            doc.setTextColor(108, 92, 231);
+            doc.text("NAJARRO X ESTUDIO", 105, 20, null, null, 'center');
+            
+            doc.setFontSize(16);
+            doc.setTextColor(45, 52, 54);
+            doc.text("COTIZACIÓN PERSONALIZADA", 105, 30, null, null, 'center');
+            
+            doc.setFontSize(12);
+            doc.setTextColor(99, 110, 114);
+            doc.text(`Fecha: ${new Date().toLocaleDateString('es-MX')}`, 105, 40, null, null, 'center');
+            
+            // Línea separadora
+            doc.setDrawColor(108, 92, 231);
+            doc.setLineWidth(0.5);
+            doc.line(20, 45, 190, 45);
+            
+            // Información del proyecto
+            doc.setFontSize(14);
+            doc.setTextColor(45, 52, 54);
+            doc.text("Detalles del Proyecto", 20, 55);
+            
+            doc.setFontSize(11);
+            doc.text(`Proyecto: ${data.projectName}`, 20, 65);
+            doc.text(`Cantidad de Loops: ${data.loopCount}`, 20, 72);
+            doc.text(`Duración por Loop: ${data.duration} segundos`, 20, 79);
+            doc.text(`Estilo Visual: ${data.style}`, 20, 86);
+            doc.text(`Entrega: ${data.delivery}`, 20, 93);
+            
+            // Línea separadora
+            doc.line(20, 100, 190, 100);
+            
+            // Desglose de costos
+            doc.setFontSize(14);
+            doc.text("Desglose de Costos", 20, 110);
+            
+            let yPos = 120;
+            
+            doc.setFontSize(11);
+            doc.text(`Loops (${data.loopCount} x $${data.pricePerLoop} c/u):`, 20, yPos);
+            doc.text(`$${data.subtotal.toFixed(2)}`, 180, yPos, null, null, 'right');
+            yPos += 10;
+            
+            if (data.expressMultiplier > 1) {
+                doc.text(`Plazo express (24 horas):`, 20, yPos);
+                doc.text(`+$${(data.subtotal * 0.3).toFixed(2)}`, 180, yPos, null, null, 'right');
+                yPos += 10;
+            }
+            
+            if (data.extras.length > 0) {
+                data.extras.forEach(extra => {
+                    let extraPrice = 0;
+                    if (extra.includes("Intro")) extraPrice = 50;
+                    else if (extra.includes("Logo")) extraPrice = 70;
+                    else if (extra.includes("revisiones")) extraPrice = 40;
+                    
+                    doc.text(`${extra}:`, 20, yPos);
+                    doc.text(`+$${extraPrice}`, 180, yPos, null, null, 'right');
+                    yPos += 10;
+                });
+            }
+            
+            // Línea separadora antes del total
+            doc.setDrawColor(150, 150, 150);
+            doc.line(20, yPos, 190, yPos);
+            yPos += 10;
+            
+            // Total
+            doc.setFontSize(14);
+            doc.setFont(undefined, 'bold');
+            doc.text("TOTAL:", 20, yPos);
+            doc.text(`$${data.total.toFixed(2)}`, 180, yPos, null, null, 'right');
+            
+            // Instrucciones de pago
+            yPos += 20;
+            doc.setFontSize(12);
+            doc.setTextColor(45, 52, 54);
+            doc.text("Instrucciones para proceder:", 20, yPos);
+            yPos += 10;
+            
+            doc.setFontSize(10);
+            doc.setTextColor(99, 110, 114);
+            doc.text("1. Realiza el pago de $" + data.total.toFixed(2) + " via transferencia, tarjeta o QR", 25, yPos);
+            yPos += 7;
+            doc.text("2. Envía el comprobante por WhatsApp al +507 6461 4851", 25, yPos);
+            yPos += 7;
+            doc.text("3. Recibirás tus loops en " + (data.delivery.includes("24") ? "24" : "72") + " horas", 25, yPos);
+            
+            // Información de contacto
+            yPos += 15;
+            doc.setFontSize(11);
+            doc.setTextColor(45, 52, 54);
+            doc.text("NAJARRO X ESTUDIO", 105, yPos, null, null, 'center');
+            yPos += 7;
+            doc.setFontSize(10);
+            doc.text("WhatsApp: +52 1 55 1234 5678 | hola@najarroxestudio.com", 105, yPos, null, null, 'center');
+            
+            // Guardar PDF
+            doc.save(`Cotizacion_Personalizada_${new Date().toISOString().slice(0,10)}.pdf`);
+        }
+        
+        // Generar PDF para pack seleccionado
+        function generatePackPDF() {
+           const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        
+        let packName = "";
+        let deliveryTime = "";
+        let customCount = 0;
+        let packType = selectedPack; // Para determinar si es festival
+        
+        if (selectedPack === 'basico') {
+            packName = "PACK BÁSICO";
+            deliveryTime = "24 horas";
+        } else if (selectedPack === 'pro') {
+            packName = "PACK PRO";
+            deliveryTime = "48 horas";
+            customCount = 1;
+        } else if (selectedPack === 'festival') {
+            packName = "PACK FESTIVAL";
+            deliveryTime = "72 horas";
+            customCount = 3;
+        }
+        
+        let projectNameDisplay = packProjectName || "Proyecto sin nombre específico";
+        
+        // Configuración inicial
+        doc.setFontSize(20);
+        doc.setTextColor(108, 92, 231);
+        doc.text("NAJARRO X ESTUDIO", 105, 20, null, null, 'center');
+        
+        doc.setFontSize(16);
+        doc.setTextColor(45, 52, 54);
+        doc.text("PEDIDO DE PACK PRE-HECHO", 105, 30, null, null, 'center');
+        
+        doc.setFontSize(12);
+        doc.setTextColor(99, 110, 114);
+        doc.text(`Fecha: ${new Date().toLocaleDateString('es-MX')}`, 105, 40, null, null, 'center');
+        
+        // Línea separadora
+        doc.setDrawColor(108, 92, 231);
+        doc.setLineWidth(0.5);
+        doc.line(20, 45, 190, 45);
+        
+        // Información del pack
+        doc.setFontSize(14);
+        doc.setTextColor(45, 52, 54);
+        doc.text("Detalles del Pedido", 20, 55);
+        
+        doc.setFontSize(11);
+        doc.text(`Pack: ${packName}`, 20, 65);
+        doc.text(`Proyecto: ${projectNameDisplay}`, 20, 72);
+        doc.text(`Precio: $${currentPackPrice}`, 20, 79);
+        doc.text(`Loops seleccionados: ${selectedLoops.length}`, 20, 86);
+        doc.text(`Entrega estimada: ${deliveryTime}`, 20, 93);
+        
+        // Si es Pack Festival, usar diseño especial para lista larga
+        if (selectedPack === 'festival') {
+            generateFestivalPackPDF(doc, packName, deliveryTime, customCount, projectNameDisplay);
+        } else {
+            // Para packs Básico y Pro, usar diseño normal
+            generateStandardPackPDF(doc, packName, deliveryTime, customCount, projectNameDisplay);
+        }
+        
+        // Guardar PDF
+        doc.save(`Pedido_${packName.replace(/\s+/g, '_')}_${new Date().toISOString().slice(0,10)}.pdf`);
+    }
+    
+    // Función para generar PDF de Pack Festival (diseño especial)
+    function generateFestivalPackPDF(doc, packName, deliveryTime, customCount, projectNameDisplay) {
+        let yPos = 110;
+        
+        // Título de lista de loops
+        doc.setFontSize(12);
+        doc.setTextColor(45, 52, 54);
+        doc.text("Loops incluidos:", 20, yPos);
+        yPos += 10;
+        
+        // Configurar para dos columnas
+        const col1X = 25; // Columna izquierda
+        const col2X = 105; // Columna derecha (aprox mitad de página)
+        const lineHeight = 7;
+        let currentCol = 1;
+        let colY = yPos;
+        
+        // Dividir loops en dos columnas
+        const middleIndex = Math.ceil(selectedLoops.length / 2);
+        const leftColumnLoops = selectedLoops.slice(0, middleIndex);
+        const rightColumnLoops = selectedLoops.slice(middleIndex);
+        
+        // Columna izquierda
+        doc.setFontSize(10);
+        leftColumnLoops.forEach((loop, index) => {
+            // Verificar si necesitamos nueva página
+            if (colY > 250 && index < leftColumnLoops.length - 3) {
+                doc.addPage();
+                colY = 20;
+                doc.setFontSize(10);
+            }
+            
+            doc.text(`• ${loop.name} (${loop.category})`, col1X, colY);
+            doc.text(`${loop.duration}`, 95, colY, null, null, 'right');
+            colY += lineHeight;
+        });
+        
+        // Columna derecha (reiniciar posición Y)
+        colY = yPos;
+        rightColumnLoops.forEach((loop, index) => {
+            // Verificar si necesitamos nueva página
+            if (colY > 250 && index < rightColumnLoops.length - 3) {
+                // Si ya estamos en página nueva desde columna izquierda, continuar
+                if (doc.internal.pages.length > 1 && colY === 20) {
+                    // Ya en nueva página
+                } else {
+                    doc.addPage();
+                    colY = 20;
+                    doc.setFontSize(10);
+                }
+            }
+            
+            doc.text(`• ${loop.name} (${loop.category})`, col2X, colY);
+            doc.text(`${loop.duration}`, 180, colY, null, null, 'right');
+            colY += lineHeight;
+        });
+        
+        // Usar la mayor Y de las dos columnas
+        yPos = Math.max(yPos + (leftColumnLoops.length * lineHeight), colY);
+        
+        // Ajustar Y para siguiente sección
+        yPos += 10;
+        
+        // Personalizaciones
+        if (customCount > 0 && packCustomDescription) {
+            // Verificar si necesitamos nueva página
+            if (yPos > 200) {
+                doc.addPage();
+                yPos = 20;
+            }
+            
+            doc.setFontSize(12);
+            doc.setTextColor(45, 52, 54);
+            doc.text("Personalizaciones solicitadas:", 20, yPos);
+            yPos += 10;
+            
+            doc.setFontSize(10);
+            doc.text(`${customCount} loop(s) personalizado(s):`, 25, yPos);
+            yPos += 7;
+            
+            // Dividir descripción larga en líneas
+            const maxWidth = 160;
+            const descLines = doc.splitTextToSize(packCustomDescription, maxWidth);
+            descLines.forEach(line => {
+                // Verificar si necesitamos nueva página
+                if (yPos > 250) {
+                    doc.addPage();
+                    yPos = 20;
+                    doc.setFontSize(10);
+                }
+                doc.text(line, 30, yPos);
+                yPos += 7;
+            });
+            yPos += 5;
+        }
+        
+        // Agregar sección de total e instrucciones en nueva página si es necesario
+        if (yPos > 180) {
+            doc.addPage();
+            yPos = 20;
+        }
+        
+        // Línea separadora antes del total
+        doc.setDrawColor(150, 150, 150);
+        doc.line(20, yPos, 190, yPos);
+        yPos += 10;
+        
+        // Total
+        doc.setFontSize(14);
+        doc.setFont(undefined, 'bold');
+        doc.text("TOTAL:", 20, yPos);
+        doc.text(`$${currentPackPrice}`, 180, yPos, null, null, 'right');
+        yPos += 15;
+        
+        // Instrucciones de pago
+        doc.setFontSize(12);
+        doc.setTextColor(45, 52, 54);
+        doc.text("Instrucciones para proceder:", 20, yPos);
+        yPos += 10;
+        
+        doc.setFontSize(10);
+        doc.setTextColor(99, 110, 114);
+        
+        const instructions = [
+            `1. Realiza el pago de $${currentPackPrice} via transferencia, tarjeta o QR`,
+            `2. Envía el comprobante por WhatsApp al +52 1 55 1234 5678`,
+            `3. Recibirás tus loops en ${deliveryTime}`
+        ];
+        
+        instructions.forEach(instruction => {
+            // Verificar si necesitamos nueva página
+            if (yPos > 270) {
+                doc.addPage();
+                yPos = 20;
+                doc.setFontSize(10);
+            }
+            doc.text(instruction, 25, yPos);
+            yPos += 7;
+        });
+        
+        // Información de contacto
+        yPos += 10;
+        if (yPos > 250) {
+            doc.addPage();
+            yPos = 20;
+        }
+        
+        doc.setFontSize(11);
+        doc.setTextColor(45, 52, 54);
+        doc.text("NAJARRO X ESTUDIO", 105, yPos, null, null, 'center');
+        yPos += 7;
+        doc.setFontSize(10);
+        doc.text("WhatsApp: +507 6461 4851 | najarrox@gmail.com", 105, yPos, null, null, 'center');
+    }
+    
+    // Función para generar PDF de Packs Básico y Pro (diseño normal)
+    function generateStandardPackPDF(doc, packName, deliveryTime, customCount, projectNameDisplay) {
+        let yPos = 110;
+        
+        // Lista de loops
+        doc.setFontSize(12);
+        doc.text("Loops incluidos:", 20, yPos);
+        yPos += 10;
+        
+        doc.setFontSize(10);
+        selectedLoops.forEach(loop => {
+            // Verificar si necesitamos nueva página
+            if (yPos > 270) {
+                doc.addPage();
+                yPos = 20;
+                doc.setFontSize(10);
+            }
+            doc.text(`• ${loop.name} (${loop.category}) - ${loop.duration}`, 25, yPos);
+            yPos += 7;
+        });
+        
+        // Personalizaciones
+        if (customCount > 0 && packCustomDescription) {
+            yPos += 5;
+            // Verificar si necesitamos nueva página
+            if (yPos > 240) {
+                doc.addPage();
+                yPos = 20;
+            }
+            
+            doc.setFontSize(12);
+            doc.setTextColor(45, 52, 54);
+            doc.text("Personalizaciones solicitadas:", 20, yPos);
+            yPos += 10;
+            
+            doc.setFontSize(10);
+            doc.text(`${customCount} loop(s) personalizado(s):`, 25, yPos);
+            yPos += 7;
+            doc.text(`${packCustomDescription}`, 30, yPos, {maxWidth: 150});
+            yPos += 15;
+        }
+        
+        // Línea separadora antes del total
+        if (yPos < 250) {
+            doc.setDrawColor(150, 150, 150);
+            doc.line(20, yPos, 190, yPos);
+            yPos += 10;
+            
+            // Total
+            doc.setFontSize(14);
+            doc.setFont(undefined, 'bold');
+            doc.text("TOTAL:", 20, yPos);
+            doc.text(`$${currentPackPrice}`, 180, yPos, null, null, 'right');
+            
+            // Instrucciones de pago
+            yPos += 20;
+            doc.setFontSize(12);
+            doc.setTextColor(45, 52, 54);
+            doc.text("Instrucciones para proceder:", 20, yPos);
+            yPos += 10;
+            
+            doc.setFontSize(10);
+            doc.setTextColor(99, 110, 114);
+            doc.text("1. Realiza el pago de $" + currentPackPrice + " via transferencia, tarjeta o QR", 25, yPos);
+            yPos += 7;
+            doc.text("2. Envía el comprobante por WhatsApp al +507 6461 4851", 25, yPos);
+            yPos += 7;
+            doc.text("3. Recibirás tus loops en " + deliveryTime, 25, yPos);
+        } else {
+            // Si no hay espacio, ir a nueva página
+            doc.addPage();
+            yPos = 20;
+            
+            // Total
+            doc.setFontSize(14);
+            doc.setFont(undefined, 'bold');
+            doc.text("TOTAL:", 20, yPos);
+            doc.text(`$${currentPackPrice}`, 180, yPos, null, null, 'right');
+            
+            // Instrucciones de pago
+            yPos += 20;
+            doc.setFontSize(12);
+            doc.setTextColor(45, 52, 54);
+            doc.text("Instrucciones para proceder:", 20, yPos);
+            yPos += 10;
+            
+            doc.setFontSize(10);
+            doc.setTextColor(99, 110, 114);
+            doc.text("1. Realiza el pago de $" + currentPackPrice + " via transferencia, tarjeta o QR", 25, yPos);
+            yPos += 7;
+            doc.text("2. Envía el comprobante por WhatsApp al +507 6461 4851", 25, yPos);
+            yPos += 7;
+            doc.text("3. Recibirás tus loops en " + deliveryTime, 25, yPos);
+        }
+        
+        // Información de contacto
+        yPos = 280;
+        doc.setFontSize(11);
+        doc.setTextColor(45, 52, 54);
+        doc.text("NAJARRO X ESTUDIO", 105, yPos, null, null, 'center');
+        yPos += 7;
+        doc.setFontSize(10);
+        doc.text("WhatsApp: +507 6461 4851 | najarrox@gmail.com", 105, yPos, null, null, 'center');
+    }
+    </script>
+</body>
+</html>
