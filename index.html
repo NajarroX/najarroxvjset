@@ -7,56 +7,29 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
     <style>
-        :root {
-            --primary: #0a0a0a;
-            --accent: #3d5afe;
-            --success: #00c853;
-            --radius: 16px;
-            --bg-home: url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&q=80&w=1920');
-        }
+        :root { --primary: #0a0a0a; --accent: #3d5afe; --success: #00c853; --radius: 16px; --bg-home: url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&q=80&w=1920'); }
         html { scroll-behavior: smooth; }
         * { box-sizing: border-box; font-family: 'Inter', sans-serif; transition: all 0.3s ease; }
         body { background: #fdfdfd; color: var(--primary); margin: 0; padding: 0; min-height: 100vh; }
-        
-        .nav-bar { 
-            background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(10px);
-            padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; 
-            position: fixed; top: 0; width: 100%; z-index: 2000; border-bottom: 1px solid rgba(0,0,0,0.1);
-        }
+        .nav-bar { background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(10px); padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; position: fixed; top: 0; width: 100%; z-index: 2000; border-bottom: 1px solid rgba(0,0,0,0.1); }
         .logo { font-weight: 900; font-size: 1.2rem; letter-spacing: 2px; cursor: pointer; text-transform: uppercase; }
-
-        #home {
-            height: 100vh; width: 100%; background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), var(--bg-home);
-            background-size: cover; background-position: center; display: flex; flex-direction: column; justify-content: center; align-items: center;
-            color: white; text-align: center; padding: 0 20px;
-        }
-
+        #home { height: 100vh; width: 100%; background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), var(--bg-home); background-size: cover; background-position: center; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; text-align: center; padding: 0 20px; }
         .main-container { max-width: 1100px; margin: 0 auto; padding: 100px 20px 60px; }
         .section { display: none; }
         .section.active { display: block; animation: fadeIn 0.5s ease; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        .sticky-nav {
-            position: sticky; top: 75px; z-index: 1500; background: rgba(253, 253, 253, 0.9);
-            padding: 10px 0; margin-bottom: 20px; backdrop-filter: blur(5px);
-        }
-        .btn-back-main { 
-            background: #f0f0f0; color: var(--primary); border: none; padding: 10px 20px; 
-            border-radius: 50px; font-weight: 700; cursor: pointer; font-size: 0.8rem;
-            display: inline-flex; align-items: center; gap: 8px;
-        }
-
+        .sticky-nav { position: sticky; top: 75px; z-index: 1500; background: rgba(253, 253, 253, 0.9); padding: 10px 0; margin-bottom: 20px; backdrop-filter: blur(5px); }
+        .btn-back-main { background: #f0f0f0; color: var(--primary); border: none; padding: 10px 20px; border-radius: 50px; font-weight: 700; cursor: pointer; font-size: 0.8rem; display: inline-flex; align-items: center; gap: 8px; }
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
-        .card { background: white; border-radius: var(--radius); padding: 40px; border: 1px solid #eee; box-shadow: 0 10px 30px rgba(0,0,0,0.02); position: relative; }
+        .card { background: white; border-radius: var(--radius); padding: 30px; border: 1px solid #eee; box-shadow: 0 10px 30px rgba(0,0,0,0.02); position: relative; display: flex; flex-direction: column; }
         .bundle-specs { background: #f8f9fa; padding: 15px; border-radius: 10px; margin: 15px 0; font-size: 0.85rem; border-left: 4px solid var(--accent); line-height: 1.5; }
-        
-        .btn-main { background: var(--accent); color: white; border: none; padding: 18px 35px; border-radius: 50px; font-weight: 700; cursor: pointer; width: 100%; text-transform: uppercase; }
-        .btn-secondary { background: #e0e0e0; color: #444; border: none; padding: 12px 25px; border-radius: 50px; font-weight: 600; cursor: pointer; width: 100%; margin-top: 10px; }
-        
-        .form-group { margin-bottom: 20px; text-align: left; }
+        .btn-main { background: var(--accent); color: white; border: none; padding: 18px 35px; border-radius: 50px; font-weight: 700; cursor: pointer; width: 100%; text-transform: uppercase; margin-top: auto; }
+        .form-group { margin-bottom: 15px; text-align: left; }
         label { display: block; font-weight: 700; margin-bottom: 8px; font-size: 0.8rem; color: #555; }
         input, select, textarea { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #ccc; font-size: 0.9rem; }
-
+        .checkbox-group { display: grid; grid-template-columns: 1fr; gap: 8px; background: #fff; padding: 10px; border: 1px solid #eee; border-radius: 10px; }
+        .checkbox-item { display: flex; align-items: center; gap: 10px; font-size: 0.85rem; cursor: pointer; }
+        .checkbox-item input { width: auto; }
         footer { background: #000; color: white; padding: 60px 20px; text-align: center; }
         .footer-logo-container { display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 20px; }
         .footer-logo-img { width: 50px; height: 50px; border-radius: 8px; object-fit: cover; }
@@ -81,71 +54,51 @@
 </div>
 
 <div class="main-container">
-    
     <div id="bundles" class="section">
         <div class="sticky-nav"><button class="btn-back-main" onclick="resetToHome()">← VOLVER AL INICIO</button></div>
         <h2 style="margin-bottom: 10px;">Bundles de Loops (Entrega: 24h)</h2>
-        <p style="margin-bottom: 30px; font-size: 0.9rem; color: #666;">Selección directa optimizada para fondos de pantalla y eventos.</p>
         <div class="grid">
             <div class="card">
                 <h3>STARTER PACK</h3>
                 <div class="bundle-specs">• 12 Loops 4K (5s c/u)<br>• Entrega: 24 Horas</div>
-                <div class="form-group">
-                    <label>Relación de Aspecto:</label>
-                    <select id="s-ratio"><option>9:16 (Vertical)</option><option>16:9 (Horizontal)</option><option>1:1 (Cuadrado)</option></select>
-                </div>
-                <div class="form-group">
-                    <label>Estética:</label>
-                    <select id="s-style">
-                        <option>Sci-Fi Biológico</option>
-                        <option>Glitch-Core Retro</option>
-                        <option>Brutalismo Ambiental</option>
-                        <option>Psicodelia Líquida Metálica</option>
-                        <option>Viaje Astral</option>
-                    </select>
-                </div>
+                <div class="form-group"><label>Ratio:</label><select id="s-ratio"><option>9:16 (Vertical)</option><option>16:9 (Horizontal)</option><option>1:1</option></select></div>
+                <div class="form-group"><label>Estética (Elegir 1):</label><select id="s-style"><option>Sci-Fi Biológico</option><option>Glitch-Core Retro</option><option>Brutalismo Ambiental</option><option>Psicodelia Líquida Metálica</option><option>Viaje Astral</option></select></div>
                 <div style="font-size: 2.2rem; font-weight: 900; margin-bottom: 20px;">$60</div>
-                <button class="btn-main" onclick="saveBundle('STARTER', 60, 's-style', 's-ratio', 12, 5, '24 horas')">Seleccionar</button>
+                <button class="btn-main" onclick="saveBundle('STARTER', 60, 'single', 's-style', 's-ratio', 12, 5, '24 horas')">Seleccionar</button>
             </div>
             <div class="card" style="border: 2px solid var(--accent);">
                 <h3>PRO PACK</h3>
                 <div class="bundle-specs">• 24 Loops 4K (5s c/u)<br>• Entrega: 24 Horas</div>
+                <div class="form-group"><label>Ratio:</label><select id="p-ratio"><option>9:16 (Vertical)</option><option>16:9 (Horizontal)</option><option>1:1</option></select></div>
                 <div class="form-group">
-                    <label>Relación de Aspecto:</label>
-                    <select id="p-ratio"><option>9:16 (Vertical)</option><option>16:9 (Horizontal)</option><option>1:1 (Cuadrado)</option></select>
-                </div>
-                <div class="form-group">
-                    <label>Estética:</label>
-                    <select id="p-style-bundle">
-                        <option>Sci-Fi Biológico</option>
-                        <option>Glitch-Core Retro</option>
-                        <option>Brutalismo Ambiental</option>
-                        <option>Psicodelia Líquida Metálica</option>
-                        <option>Viaje Astral</option>
-                    </select>
+                    <label>Estéticas (Máximo 2):</label>
+                    <div class="checkbox-group" id="p-styles">
+                        <label class="checkbox-item"><input type="checkbox" value="Sci-Fi Biológico"> Sci-Fi Biológico</label>
+                        <label class="checkbox-item"><input type="checkbox" value="Glitch-Core Retro"> Glitch-Core Retro</label>
+                        <label class="checkbox-item"><input type="checkbox" value="Brutalismo Ambiental"> Brutalismo Ambiental</label>
+                        <label class="checkbox-item"><input type="checkbox" value="Psicodelia Líquida Metálica"> Psicodelia Líquida</label>
+                        <label class="checkbox-item"><input type="checkbox" value="Viaje Astral"> Viaje Astral</label>
+                    </div>
                 </div>
                 <div style="font-size: 2.2rem; font-weight: 900; margin-bottom: 20px;">$110</div>
-                <button class="btn-main" onclick="saveBundle('PRO', 110, 'p-style-bundle', 'p-ratio', 24, 5, '24 horas')">Seleccionar</button>
+                <button class="btn-main" onclick="saveBundle('PRO', 110, 'multi', 'p-styles', 'p-ratio', 24, 5, '24 horas', 2)">Seleccionar</button>
             </div>
             <div class="card">
                 <h3>INFINITY PACK</h3>
                 <div class="bundle-specs">• 50 Loops 4K (5s c/u)<br>• Entrega: 24 Horas</div>
+                <div class="form-group"><label>Ratio:</label><select id="u-ratio"><option>9:16 (Vertical)</option><option>16:9 (Horizontal)</option><option>1:1</option></select></div>
                 <div class="form-group">
-                    <label>Relación de Aspecto:</label>
-                    <select id="u-ratio"><option>9:16 (Vertical)</option><option>16:9 (Horizontal)</option><option>1:1 (Cuadrado)</option></select>
-                </div>
-                <div class="form-group">
-                    <label>Estética:</label>
-                    <select id="u-style">
-                        <option>Sci-Fi Biológico</option>
-                        <option>Glitch-Core Retro</option>
-                        <option>Brutalismo Ambiental</option>
-                        <option>Psicodelia Líquida Metálica</option>
-                        <option>Viaje Astral</option>
-                    </select>
+                    <label>Estéticas (Máximo 3):</label>
+                    <div class="checkbox-group" id="u-styles">
+                        <label class="checkbox-item"><input type="checkbox" value="Sci-Fi Biológico"> Sci-Fi Biológico</label>
+                        <label class="checkbox-item"><input type="checkbox" value="Glitch-Core Retro"> Glitch-Core Retro</label>
+                        <label class="checkbox-item"><input type="checkbox" value="Brutalismo Ambiental"> Brutalismo Ambiental</label>
+                        <label class="checkbox-item"><input type="checkbox" value="Psicodelia Líquida Metálica"> Psicodelia Líquida</label>
+                        <label class="checkbox-item"><input type="checkbox" value="Viaje Astral"> Viaje Astral</label>
+                    </div>
                 </div>
                 <div style="font-size: 2.2rem; font-weight: 900; margin-bottom: 20px;">$210</div>
-                <button class="btn-main" onclick="saveBundle('INFINITY', 210, 'u-style', 'u-ratio', 50, 5, '24 horas')">Seleccionar</button>
+                <button class="btn-main" onclick="saveBundle('INFINITY', 210, 'multi', 'u-styles', 'u-ratio', 50, 5, '24 horas', 3)">Seleccionar</button>
             </div>
         </div>
     </div>
@@ -153,50 +106,26 @@
     <div id="custom" class="section">
         <div class="sticky-nav"><button class="btn-back-main" onclick="resetToHome()">← VOLVER AL INICIO</button></div>
         <div class="card" style="max-width: 600px; margin: 0 auto; text-align: center;">
-            <h2>Proyecto de Loop a Medida</h2>
-            <p style="font-size: 0.85rem; color: #666; margin-bottom: 25px;">
-                Creación de loops únicos bajo demanda para eventos o fondos.<br>
-                <strong>No apto para anuncios con guion o comerciales tradicionales.</strong>
-            </p>
-            <div class="form-group">
-                <label>Nombre del Proyecto:</label>
-                <input type="text" id="p-name" placeholder="Ej: Visual Set - Escenario Techno">
-            </div>
-            <div class="form-group">
-                <label>Concepto Visual (Idea):</label>
-                <textarea id="p-prompt" rows="3" placeholder="Describe la energía, colores y texturas deseados..."></textarea>
-            </div>
+            <h2>Proyecto a Medida</h2>
+            <div class="form-group"><label>Proyecto:</label><input type="text" id="p-name" placeholder="Ej: Visual Set Techno"></div>
+            <div class="form-group"><label>Concepto:</label><textarea id="p-prompt" rows="3"></textarea></div>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                <div class="form-group">
-                    <label>Relación de Aspecto:</label>
-                    <select id="c-ratio"><option>9:16 (Vertical)</option><option>16:9 (Horizontal)</option><option>1:1 (Cuadrado)</option></select>
-                </div>
-                <div class="form-group">
-                    <label>Segundos por Loop:</label>
-                    <select id="p-duration" onchange="updateCustomTotal()">
-                        <option value="15">15s ($75)</option>
-                        <option value="30">30s ($150)</option>
-                        <option value="60">60s ($300)</option>
-                    </select>
-                </div>
+                <div class="form-group"><label>Ratio:</label><select id="c-ratio"><option>9:16</option><option>16:9</option><option>1:1</option></select></div>
+                <div class="form-group"><label>Segundos:</label><select id="p-duration" onchange="updateCustomTotal()"><option value="15">15s ($75)</option><option value="30">30s ($150)</option><option value="60">60s ($300)</option></select></div>
             </div>
-            <div class="form-group">
-                <label>Cantidad de Clips:</label>
-                <input type="number" id="p-qty" value="1" min="1" oninput="updateCustomTotal()">
-            </div>
+            <div class="form-group"><label>Cantidad:</label><input type="number" id="p-qty" value="1" min="1" oninput="updateCustomTotal()"></div>
             <div style="font-size: 2.5rem; font-weight: 900; margin: 20px 0;">Total: $<span id="p-total">75</span></div>
-            <button class="btn-main" onclick="saveCustom()">Continuar a Datos</button>
-            <button class="btn-secondary" onclick="clearCustomForm()">Limpiar Formulario</button>
+            <button class="btn-main" onclick="saveCustom()">Continuar</button>
         </div>
     </div>
 
     <div id="client-data" class="section">
         <div class="sticky-nav"><button class="btn-back-main" id="back-to-source">← REGRESAR</button></div>
         <div class="card" style="max-width: 500px; margin: 0 auto;">
-            <h2>Información de Contacto</h2>
-            <div class="form-group"><label>Nombre Completo:</label><input type="text" id="c-name"></div>
+            <h2>Contacto</h2>
+            <div class="form-group"><label>Nombre:</label><input type="text" id="c-name"></div>
             <div class="form-group"><label>WhatsApp:</label><input type="text" id="c-phone"></div>
-            <div class="form-group"><label>Correo Electrónico:</label><input type="email" id="c-email"></div>
+            <div class="form-group"><label>Email:</label><input type="email" id="c-email"></div>
             <button class="btn-main" onclick="finalStep()">Generar Cotización</button>
         </div>
     </div>
@@ -205,16 +134,16 @@
         <div class="card" style="text-align: center; max-width: 500px; margin: 0 auto;">
             <h2 style="color: var(--success);">¡Propuesta Lista!</h2>
             <div id="final-summary" style="margin: 30px 0;"></div>
-            <button class="btn-main" onclick="downloadPDF()">Descargar PDF Formal</button>
-            <button class="btn-main" style="background:#25D366; margin-top:12px;" onclick="sendWhatsApp()">Confirmar por WhatsApp</button>
-            <button class="btn-back-main" style="margin-top: 30px; width: 100%; justify-content: center;" onclick="resetToHome()">NUEVA COTIZACIÓN / INICIO</button>
+            <button class="btn-main" onclick="downloadPDF()">Descargar PDF</button>
+            <button class="btn-main" style="background:#25D366; margin-top:12px;" onclick="sendWhatsApp()">Confirmar WhatsApp</button>
+            <button class="btn-back-main" style="margin-top: 30px; width:100%; justify-content:center;" onclick="resetToHome()">INICIO</button>
         </div>
     </div>
 </div>
 
 <footer>
     <div class="footer-logo-container">
-        <img src="images/NAJARROX-logoB.png" alt="Logo Najarro X" class="footer-logo-img">
+        <img src="images/NAJARROX-logoB.png" alt="Logo" class="footer-logo-img">
         <div class="logo">NAJARRO X ESTUDIO</div>
     </div>
     <div class="social-links">
@@ -224,7 +153,7 @@
         <a href="https://linktr.ee/najarrox" target="_blank">Linktree</a>
         <a href="mailto:najarrox@gmail.com">Correo</a>
     </div>
-    <p style="margin-top: 30px; font-size: 0.7rem; opacity: 0.5;">&copy; 2026 NAJARRO X ESTUDIO. Orgullo Latino.</p>
+    <p style="margin-top:30px; font-size:0.7rem; opacity:0.5;">&copy; 2026 NAJARRO X ESTUDIO. Orgullo Latino.</p>
 </footer>
 
 <script>
@@ -236,36 +165,38 @@
         const target = document.getElementById(id);
         target.classList.add('active');
         
-        if(id === 'home') {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        } else {
-            const headerOffset = 80;
-            const elementPosition = target.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-            window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
-        }
+        // Restauración del Scroll Automático
+        const headerOffset = 80;
+        const elementPosition = target.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+        window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
     }
 
-    function resetToHome() { navigateTo('home'); }
-
-    function clearCustomForm() {
-        document.getElementById('p-name').value = '';
-        document.getElementById('p-prompt').value = '';
-        document.getElementById('p-qty').value = 1;
-        updateCustomTotal();
+    function resetToHome() { 
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        document.getElementById('home').classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function updateCustomTotal() {
         const qty = document.getElementById('p-qty').value || 0;
         const dur = document.getElementById('p-duration').value;
-        const precioPorSegundo = 5; 
-        document.getElementById('p-total').innerText = qty * (parseInt(dur) * precioPorSegundo);
+        document.getElementById('p-total').innerText = qty * (parseInt(dur) * 5);
     }
 
-    function saveBundle(nivel, precio, styleId, ratioId, loops, segs, tiempo) {
+    function saveBundle(nivel, precio, tipo, inputId, ratioId, loops, segs, tiempo, max) {
+        let estetica = "";
+        if(tipo === 'single') {
+            estetica = document.getElementById(inputId).value;
+        } else {
+            const selected = Array.from(document.querySelectorAll(`#${inputId} input:checked`)).map(i => i.value);
+            if(selected.length === 0) { alert("Elige al menos una estética"); return; }
+            if(selected.length > max) { alert(`Este pack permite máximo ${max} estéticas`); return; }
+            estetica = selected.join(", ");
+        }
         quoteData = { 
-            service: "BUNDLE DE LOOPS - " + nivel, subtotal: precio, 
-            detail: `Estética: ${document.getElementById(styleId).value}\nRelación de Aspecto: ${document.getElementById(ratioId).value}\nFormato: ${loops} Loops de ${segs}s\nEntrega Estimada: ${tiempo}`,
+            service: "BUNDLE LOOPS - " + nivel, subtotal: precio, 
+            detail: `Estéticas: ${estetica}\nRatio: ${document.getElementById(ratioId).value}\nFormato: ${loops} Loops de ${segs}s\nEntrega: ${tiempo}`,
             applyDiscount: false 
         };
         document.getElementById('back-to-source').onclick = () => navigateTo('bundles');
@@ -273,13 +204,11 @@
     }
 
     function saveCustom() {
-        const nombreProyecto = document.getElementById('p-name').value || "Proyecto de Loop a Medida";
         const qty = document.getElementById('p-qty').value;
         const dur = document.getElementById('p-duration').value;
-        const precioPorSegundo = 5;
         quoteData = { 
-            service: "PRODUCCIÓN DE LOOPS A MEDIDA", subtotal: qty * (parseInt(dur) * precioPorSegundo), 
-            detail: `PROYECTO: ${nombreProyecto}\nConcepto: ${document.getElementById('p-prompt').value}\nRelación de Aspecto: ${document.getElementById('c-ratio').value}\nFormato: ${qty} Loops de ${dur}s\nEntrega Estimada: 24 a 72 horas`,
+            service: "PRODUCCIÓN A MEDIDA", subtotal: qty * (parseInt(dur) * 5), 
+            detail: `Proyecto: ${document.getElementById('p-name').value}\nConcepto: ${document.getElementById('p-prompt').value}\nRatio: ${document.getElementById('c-ratio').value}\nFormato: ${qty} Loops de ${dur}s\nEntrega: 24-72h`,
             applyDiscount: true 
         };
         document.getElementById('back-to-source').onclick = () => navigateTo('custom');
@@ -292,12 +221,12 @@
         quoteData.clientEmail = document.getElementById('c-email').value;
         const disc = quoteData.applyDiscount ? quoteData.subtotal * 0.05 : 0;
         quoteData.total = quoteData.subtotal - disc;
-        document.getElementById('final-summary').innerHTML = `<div style="font-size: 3rem; font-weight: 900; color: var(--accent);">$${quoteData.total.toFixed(2)}</div>`;
+        document.getElementById('final-summary').innerHTML = `<div style="font-size:3rem; font-weight:900; color:var(--accent);">$${quoteData.total.toFixed(2)}</div>`;
         navigateTo('actions');
     }
 
     function sendWhatsApp() {
-        const msg = `*NAJARRO X ESTUDIO* Hola, envío mi interés en: ${quoteData.service} ($${quoteData.total.toFixed(2)}).`;
+        const msg = `*NAJARRO X ESTUDIO* Hola, me interesa: ${quoteData.service} ($${quoteData.total.toFixed(2)}).`;
         window.open(`https://wa.me/50764614851?text=${encodeURIComponent(msg)}`);
     }
 
@@ -305,22 +234,23 @@
         const doc = new jsPDF();
         doc.setFillColor(10, 10, 10); doc.rect(0, 0, 210, 40, 'F');
         doc.setTextColor(255, 255, 255); doc.setFontSize(22); doc.setFont("helvetica", "bold"); doc.text("NAJARRO X ESTUDIO", 15, 25);
-        doc.setTextColor(0,0,0); doc.setFontSize(10); doc.text(`ATENCIÓN A: ${quoteData.clientName}`, 15, 55);
+        doc.setTextColor(0,0,0); doc.setFontSize(10); doc.text(`CLIENTE: ${quoteData.clientName}`, 15, 55);
         doc.text(`FECHA: ${new Date().toLocaleDateString()}`, 160, 55);
-        doc.autoTable({
-            startY: 75, head: [['DESCRIPCIÓN DEL SERVICIO (ACTIVOS VISUALES)', 'VALOR']],
-            body: [[`${quoteData.service}\n${quoteData.detail}`, `$${quoteData.subtotal.toFixed(2)}`]],
-            theme: 'grid', headStyles: { fillColor: [0,0,0] }
-        });
+        doc.autoTable({ startY: 70, head: [['DESCRIPCIÓN', 'VALOR']], body: [[`${quoteData.service}\n${quoteData.detail}`, `$${quoteData.subtotal.toFixed(2)}`]], theme: 'grid', headStyles: { fillColor: [0,0,0] } });
+        
         let finalY = doc.lastAutoTable.finalY + 15;
-        if(quoteData.applyDiscount) { 
-            doc.text(`DESC. PROMO (5%): -$${(quoteData.subtotal*0.05).toFixed(2)}`, 195, finalY, {align:'right'}); 
-            finalY+=8; 
-        }
-        doc.setFontSize(16); doc.text(`TOTAL FINAL: $${quoteData.total.toFixed(2)} USD`, 195, finalY, {align:'right'});
-        finalY += 30; doc.setFontSize(9); doc.setFont("helvetica", "bold"); doc.text("NOTAS IMPORTANTES:", 15, finalY);
+        doc.setFontSize(14); doc.text(`TOTAL FINAL: $${quoteData.total.toFixed(2)} USD`, 195, finalY, {align:'right'});
+        
+        // Restauración de Notas Importantes
+        finalY += 25;
+        doc.setFontSize(9); doc.setFont("helvetica", "bold"); doc.text("NOTAS IMPORTANTES:", 15, finalY);
         doc.setFont("helvetica", "normal");
-        doc.text(["- Esta cotización es exclusiva para LOOPS visuales (Recursos para Fondos/Eventos).", "- El tiempo de entrega inicia tras la confirmación del pago.", "- Aceptación mediante WhatsApp o correo electrónico."], 15, finalY + 7);
+        const notas = [
+            "- Esta cotización es exclusiva para LOOPS visuales (Recursos para Fondos/Eventos).",
+            "- El tiempo de entrega inicia tras la confirmación del pago.",
+            "- Aceptación mediante WhatsApp o correo electrónico."
+        ];
+        doc.text(notas, 15, finalY + 7);
         doc.save(`Cotizacion_NX_${quoteData.clientName.replace(/\s+/g, '_')}.pdf`);
     }
 </script>
