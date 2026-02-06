@@ -107,6 +107,7 @@
         <div class="sticky-nav"><button class="btn-back-main" onclick="resetToHome()">← VOLVER AL INICIO</button></div>
         <div class="card" style="max-width: 600px; margin: 0 auto; text-align: center;">
             <h2>Proyecto a Medida</h2>
+            <p style="font-size: 0.85rem; color: #666; margin-bottom: 25px;">Servicio de diseño exclusivo. No se aplican descuentos promocionales.</p>
             <div class="form-group"><label>Proyecto:</label><input type="text" id="p-name" placeholder="Ej: Visual Set Techno"></div>
             <div class="form-group"><label>Concepto:</label><textarea id="p-prompt" rows="3"></textarea></div>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
@@ -164,8 +165,6 @@
         document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
         const target = document.getElementById(id);
         target.classList.add('active');
-        
-        // Restauración del Scroll Automático
         const headerOffset = 80;
         const elementPosition = target.getBoundingClientRect().top;
         const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
@@ -197,7 +196,7 @@
         quoteData = { 
             service: "BUNDLE LOOPS - " + nivel, subtotal: precio, 
             detail: `Estéticas: ${estetica}\nRatio: ${document.getElementById(ratioId).value}\nFormato: ${loops} Loops de ${segs}s\nEntrega: ${tiempo}`,
-            applyDiscount: false 
+            applyDiscount: false // No aplica descuento para Bundles fijos ya rebajados
         };
         document.getElementById('back-to-source').onclick = () => navigateTo('bundles');
         navigateTo('client-data');
@@ -209,7 +208,7 @@
         quoteData = { 
             service: "PRODUCCIÓN A MEDIDA", subtotal: qty * (parseInt(dur) * 5), 
             detail: `Proyecto: ${document.getElementById('p-name').value}\nConcepto: ${document.getElementById('p-prompt').value}\nRatio: ${document.getElementById('c-ratio').value}\nFormato: ${qty} Loops de ${dur}s\nEntrega: 24-72h`,
-            applyDiscount: true 
+            applyDiscount: false // DESACTIVADO: El trabajo a medida se cobra completo.
         };
         document.getElementById('back-to-source').onclick = () => navigateTo('custom');
         navigateTo('client-data');
@@ -217,10 +216,7 @@
 
     function finalStep() {
         quoteData.clientName = document.getElementById('c-name').value;
-        quoteData.clientPhone = document.getElementById('c-phone').value;
-        quoteData.clientEmail = document.getElementById('c-email').value;
-        const disc = quoteData.applyDiscount ? quoteData.subtotal * 0.05 : 0;
-        quoteData.total = quoteData.subtotal - disc;
+        quoteData.total = quoteData.subtotal; // El total es igual al subtotal (sin descuentos)
         document.getElementById('final-summary').innerHTML = `<div style="font-size:3rem; font-weight:900; color:var(--accent);">$${quoteData.total.toFixed(2)}</div>`;
         navigateTo('actions');
     }
@@ -241,7 +237,6 @@
         let finalY = doc.lastAutoTable.finalY + 15;
         doc.setFontSize(14); doc.text(`TOTAL FINAL: $${quoteData.total.toFixed(2)} USD`, 195, finalY, {align:'right'});
         
-        // Restauración de Notas Importantes
         finalY += 25;
         doc.setFontSize(9); doc.setFont("helvetica", "bold"); doc.text("NOTAS IMPORTANTES:", 15, finalY);
         doc.setFont("helvetica", "normal");
