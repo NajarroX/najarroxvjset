@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NAJARRO X ESTUDIO | Recursos Digitales</title>
+    <title>NAJARRO X ESTUDIO | VJ LOOPS</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
     <style>
@@ -36,7 +36,6 @@
             min-height: 100vh;
         }
         
-        /* NAV BAR - EXPERIMENTAL */
         .nav-bar { 
             background: rgba(10, 10, 10, 0.98); 
             backdrop-filter: blur(10px); 
@@ -61,7 +60,6 @@
             color: white;
         }
         
-        /* HOME - CON EFECTO GLITCH */
         #home { 
             height: 100vh; 
             width: 100%; 
@@ -127,7 +125,6 @@
             to { opacity: 1; transform: translateY(0); } 
         }
         
-        /* STICKY NAV */
         .sticky-nav { 
             position: sticky; 
             top: 75px; 
@@ -168,7 +165,6 @@
             gap: 40px; 
         }
         
-        /* CARDS BRUTALISTAS */
         .card { 
             background: white; 
             border-radius: 0; 
@@ -223,7 +219,6 @@
             margin-top: 0;
         }
         
-        /* BOTÓN PRINCIPAL */
         .btn-main { 
             background: var(--primary); 
             color: white; 
@@ -262,7 +257,6 @@
             color: white;
         }
         
-        /* FORMULARIOS INDUSTRIALES */
         .form-group { margin-bottom: 15px; text-align: left; }
         
         label { 
@@ -318,7 +312,6 @@
             accent-color: var(--accent);
         }
         
-        /* PRECIOS CON GRADIENTE */
         .card div[style*="font-size: 2.2rem"] {
             font-family: var(--font-display) !important;
             font-weight: 900 !important;
@@ -330,7 +323,6 @@
             text-shadow: 2px 2px 0 rgba(0,0,0,0.1);
         }
         
-        /* FOOTER RADICAL */
         footer { 
             background: #000; 
             color: white; 
@@ -397,6 +389,28 @@
             border-color: var(--accent);
             color: black;
         }
+        
+        .steps-text {
+            font-family: var(--font-mono);
+            font-size: 0.95rem;
+            line-height: 1.8;
+            color: #333;
+            text-align: left;
+            background: #f5f5f5;
+            padding: 20px;
+            border-left: 4px solid var(--accent);
+            margin: 20px 0;
+        }
+        
+        .steps-text p {
+            margin-bottom: 10px;
+        }
+        
+        .steps-text .step-number {
+            color: var(--accent);
+            font-weight: 800;
+            margin-right: 8px;
+        }
     </style>
 </head>
 <body>
@@ -410,7 +424,7 @@
     <h1>TU VISIÓN EN MOVIMIENTO</h1>
     <p>Activos Visuales High-End y Loops Experimentales</p>
     <div style="display: flex; gap: 15px; flex-wrap: wrap; justify-content: center;">
-        <button class="btn-main" style="width:auto" onclick="navigateTo('bundles')">Bundles Listos</button>
+        <button class="btn-main" style="width:auto" onclick="navigateTo('bundles')">VJ Bundles</button>
         <button onclick="navigateTo('custom')" style="background:transparent; border:2px solid white; color:white; padding:18px 35px; border-radius:0; cursor:pointer; font-weight:700; font-family:var(--font-mono); text-transform:uppercase;">Proyecto a Medida</button>
     </div>
 </div>
@@ -471,45 +485,18 @@
         <div class="sticky-nav"><button class="btn-back-main" onclick="resetToHome()">← VOLVER AL INICIO</button></div>
         <div class="card" style="max-width: 600px; margin: 0 auto;">
             <h2 style="text-align: center;">Proyecto a Medida</h2>
-            <p style="font-size: 0.85rem; color: #666; margin-bottom: 25px; text-align: center; font-family: var(--font-mono);">Cuéntanos tu visión. Crearemos una estética única.</p>
+            <p style="font-size: 0.85rem; color: #666; margin-bottom: 25px; text-align: center; font-family: var(--font-mono);">Cuéntanos tu visión. Crearemos una estética única para tu marca. El precio se calculará y se mostrará en la cotización.</p>
             
             <div class="form-group"><label>Nombre del Proyecto *</label><input type="text" id="p-name" placeholder="Ej: Identidad Visual para Marca de Ropa Urbana"></div>
+            
             <div class="form-group"><label>Descripción / Concepto *</label><textarea id="p-prompt" rows="3" placeholder="Vibra, colores, referencias, historia..."></textarea></div>
             
-            <div class="form-group">
-                <label>Tipo de Producto *</label>
-                <select id="p-type" onchange="togglePersonajeField()">
-                    <option value="video-simple">Loop / Video Conceptual</option>
-                    <option value="personaje">Personaje + Storytelling</option>
-                    <option value="kit-marca">Kit de Marca (5+ activos)</option>
-                </select>
-            </div>
-            
-            <div class="form-group" id="personaje-field" style="display: none;">
-                <label>Nombre del Personaje</label>
-                <input type="text" id="p-char-name" placeholder="Ej: 'Luna, la exploradora'">
-            </div>
-            
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                <div class="form-group"><label>Ratio *</label><select id="c-ratio"><option>9:16 (Vertical)</option><option>16:9 (Horizontal)</option><option>1:1 (Cuadrado)</option></select></div>
-                <div class="form-group"><label>Duración *</label><select id="p-duration" onchange="updateCustomTotal()"><option value="15">15s</option><option value="30">30s</option><option value="60">60s</option></select></div>
+                <div class="form-group"><label>Ratio *</label><select id="c-ratio"><option>9:16 (Vertical - Reels)</option><option>16:9 (Horizontal - YouTube)</option><option>1:1 (Cuadrado - Feed)</option></select></div>
+                <div class="form-group"><label>Duración *</label><select id="p-duration"><option value="15">15 segundos</option><option value="30">30 segundos</option><option value="60">60 segundos</option></select></div>
             </div>
             
-            <div class="form-group">
-                <label>Estética Principal</label>
-                <select id="p-aesthetic">
-                    <option value="">-- A criterio de NX --</option>
-                    <option value="sci-fi">Sci-Fi Biológico</option>
-                    <option value="glitch">Glitch-Core</option>
-                    <option value="brutalist">Brutalismo Ambiental</option>
-                    <option value="psychedelic">Psicodelia Líquida</option>
-                    <option value="astral">Viaje Astral</option>
-                </select>
-            </div>
-            
-            <div class="form-group"><label>Cantidad *</label><input type="number" id="p-qty" value="1" min="1" oninput="updateCustomTotal()"></div>
-            
-            <div style="font-size: 2.5rem; font-weight: 900; margin: 20px 0; text-align: center;">Total: $<span id="p-total">112</span></div>
+            <div class="form-group"><label>Cantidad de activos/videos *</label><input type="number" id="p-qty" value="1" min="1"></div>
             
             <button class="btn-main" onclick="saveCustom()">Continuar a Contacto</button>
         </div>
@@ -527,11 +514,18 @@
         </div>
     </div>
 
-    <!-- ACCIONES FINALES -->
+    <!-- ACCIONES FINALES - CON PASOS Y SIN PRECIO -->
     <div id="actions" class="section">
         <div class="card" style="text-align: center; max-width: 500px; margin: 0 auto;">
             <h2 style="color: var(--success);">¡Propuesta Lista!</h2>
-            <div id="final-summary" style="margin: 30px 0;"></div>
+            
+            <div class="steps-text">
+                <p><span class="step-number">1.</span> Descarga tu cotización en PDF haciendo clic en el botón de abajo.</p>
+                <p><span class="step-number">2.</span> Revisa el detalle y el precio final en el documento.</p>
+                <p><span class="step-number">3.</span> Confirma por WhatsApp para iniciar tu producción.</p>
+                <p><span class="step-number">4.</span> Recibe tus activos en 24-72 horas.</p>
+            </div>
+            
             <button class="btn-main" onclick="downloadPDF()">Descargar PDF</button>
             <button class="btn-main" style="background:#25D366; margin-top:12px; border-color:#25D366;" onclick="sendWhatsApp()">Confirmar WhatsApp</button>
             <button class="btn-back-main" style="margin-top: 30px; width:100%; justify-content:center;" onclick="resetToHome()">INICIO</button>
@@ -574,42 +568,6 @@
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    function togglePersonajeField() {
-        const tipo = document.getElementById('p-type').value;
-        const personajeField = document.getElementById('personaje-field');
-        if (personajeField) {
-            personajeField.style.display = (tipo === 'personaje') ? 'block' : 'none';
-        }
-        updateCustomTotal();
-    }
-
-    function updateCustomTotal() {
-        const qty = parseInt(document.getElementById('p-qty')?.value) || 1;
-        const dur = parseInt(document.getElementById('p-duration')?.value) || 15;
-        const tipo = document.getElementById('p-type')?.value || 'video-simple';
-        
-        let precioPorSegundo = 7.5;
-        let cargoExtra = 0;
-        
-        if (tipo === 'personaje') {
-            precioPorSegundo = 10;
-            cargoExtra = 50;
-        } else if (tipo === 'kit-marca') {
-            document.getElementById('p-total').innerText = 500;
-            return;
-        }
-        
-        const total = (qty * dur * precioPorSegundo) + cargoExtra;
-        document.getElementById('p-total').innerText = Math.round(total);
-    }
-
-    document.addEventListener('DOMContentLoaded', function() {
-        if (document.getElementById('p-type')) {
-            togglePersonajeField();
-            updateCustomTotal();
-        }
-    });
-
     function saveBundle(nivel, precio, tipo, inputId, ratioId, loops, segs, tiempo, max) {
         let estetica = "";
         if(tipo === 'single') {
@@ -632,23 +590,16 @@
     }
 
     function saveCustom() {
-        const qty = document.getElementById('p-qty').value;
-        const dur = document.getElementById('p-duration').value;
-        const tipo = document.getElementById('p-type').value;
-        const personaje = document.getElementById('p-char-name')?.value || '';
-        const esteticaSelect = document.getElementById('p-aesthetic');
-        const esteticaTexto = esteticaSelect.options[esteticaSelect.selectedIndex]?.text || 'A criterio del estudio';
+        const qty = parseInt(document.getElementById('p-qty').value) || 1;
+        const dur = parseInt(document.getElementById('p-duration').value) || 15;
         
-        let tipoLegible = {
-            'video-simple': 'Video Conceptual',
-            'personaje': 'Personaje + Storytelling',
-            'kit-marca': 'Kit de Marca'
-        }[tipo] || tipo;
+        // Calcular precio (7.5 por segundo por activo)
+        const subtotal = qty * dur * 7.5;
         
         quoteData = { 
-            service: "PROYECTO A MEDIDA - " + tipoLegible, 
-            subtotal: parseInt(document.getElementById('p-total').innerText), 
-            detail: `Proyecto: ${document.getElementById('p-name').value}\nConcepto: ${document.getElementById('p-prompt').value}\nTipo: ${tipoLegible}\n${personaje ? 'Personaje: ' + personaje + '\n' : ''}Estética: ${esteticaTexto}\nRatio: ${document.getElementById('c-ratio').value}\nCantidad: ${qty} activo(s) de ${dur}s\nEntrega: 24-72h`,
+            service: "PROYECTO A MEDIDA - Video Conceptual", 
+            subtotal: Math.round(subtotal), 
+            detail: `Proyecto: ${document.getElementById('p-name').value}\nConcepto: ${document.getElementById('p-prompt').value}\nRatio: ${document.getElementById('c-ratio').value}\nCantidad: ${qty} activo(s) de ${dur}s\nEntrega: 24-72h`,
             tipoProducto: "custom",
             applyDiscount: false
         };
@@ -662,10 +613,7 @@
         quoteData.clientEmail = document.getElementById('c-email').value || 'No especificado';
         quoteData.total = quoteData.subtotal;
         
-        document.getElementById('final-summary').innerHTML = `
-            <div style="font-size:2rem; font-weight:900; color:var(--accent);">$${quoteData.total.toFixed(2)}</div>
-            <div style="margin-top:15px; font-size:0.9rem; color:#666; font-family:var(--font-mono);">${quoteData.service}</div>
-        `;
+        // Simplemente navegamos a actions sin mostrar precio
         navigateTo('actions');
     }
 
